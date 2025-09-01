@@ -3,9 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>vendetta4c - Digital Solutions & Web Development</title>
+    <title>vendetta4c - CyberSec Specialist & Digital Solutions</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
+        :root {
+            /* CyberSec Theme (Default) */
+            --bg-primary: #0a0a12;
+            --bg-secondary: #0f0f1a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0aec0;
+            --accent-cyan: #00ffcc;
+            --accent-red: #ff0066;
+            --accent-purple: #bd00ff;
+            --accent-yellow: #ffcc00;
+            --border-color: rgba(0, 255, 204, 0.3);
+            --shadow-color: rgba(0, 255, 204, 0.2);
+            --matrix-opacity: 0.4;
+            --card-bg: rgba(0, 0, 0, 0.6);
+            --glow-intensity: 8px;
+            --card-bg-current: rgba(0, 0, 0, 0.6);
+            --border-color-current: rgba(0, 255, 204, 0.3);
+            --accent-cyan-current: #00ffcc;
+            --accent-red-current: #ff0066;
+            --text-primary-current: #ffffff;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -18,300 +41,187 @@
 
         body {
             font-family: 'Rajdhani', 'Courier New', monospace;
-            background: #0f0f23;
-            color: #ffffff;
+            background: var(--bg-primary);
+            color: var(--text-primary);
             overflow-x: hidden;
             position: relative;
+            transition: all 0.3s ease;
+            line-height: 1.6;
         }
 
-        /* Page System */
-        .page {
-            display: none;
-            min-height: 100vh;
-            animation: pageSlideIn 0.8s ease-out;
+        /* Live Market Ticker */
+        .market-ticker {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background: var(--card-bg-current);
+            border-bottom: 2px solid var(--border-color-current);
+            overflow: hidden;
+            z-index: 999;
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
         }
 
-        .page.active {
-            display: block;
+        .ticker-container {
+            display: flex;
+            animation: ticker-scroll 60s linear infinite;
+            white-space: nowrap;
         }
 
-        @keyframes pageSlideIn {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
+        .ticker-item {
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+        }
+
+        .ticker-symbol {
+            color: var(--accent-cyan-current);
+            font-weight: 700;
+            margin-right: 8px;
+        }
+
+        .ticker-price {
+            color: var(--text-primary-current);
+            margin-right: 5px;
+        }
+
+        .ticker-change {
+            font-size: 12px;
+            padding: 2px 5px;
+            border-radius: 3px;
+            margin-left: 5px;
+        }
+
+        .ticker-change.positive {
+            color: #10b981;
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .ticker-change.negative {
+            color: var(--accent-red-current);
+            background: rgba(220, 38, 38, 0.1);
+        }
+
+        @keyframes ticker-scroll {
+            0% {
+                transform: translateX(100%);
             }
-            to {
-                opacity: 1;
-                transform: translateX(0);
+            100% {
+                transform: translateX(-100%);
             }
         }
 
-        /* Enhanced Loading System */
-        .loading-overlay {
+        /* Cyber Terminal Loader */
+        #terminal-loader {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #0f0f23, #1a1a2e, #2d1b69, #0f0f23);
-            background-size: 400% 400%;
-            animation: gradientWave 8s ease infinite;
-            z-index: 10000;
+            background: var(--bg-primary);
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
+            z-index: 9999;
             flex-direction: column;
         }
 
-        @keyframes gradientWave {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
-        .loading-container {
-            text-align: center;
-            position: relative;
-        }
-
-        .loading-logo {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            border: 3px solid rgba(0, 255, 204, 0.3);
-            margin: 0 auto 30px;
-            position: relative;
-            animation: logoSpin 2s linear infinite;
-            overflow: hidden;
-        }
-
-        .loading-logo img {
+        .terminal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            filter: brightness(1.2) contrast(1.1);
-        }
-
-        .loading-logo::before {
-            content: '';
-            position: absolute;
-            top: -3px;
-            left: -3px;
-            right: -3px;
-            bottom: -3px;
-            border: 3px solid transparent;
-            border-top: 3px solid #ff0066;
-            border-right: 3px solid #00ffcc;
-            border-radius: 50%;
-            animation: logoSpin 1.5s linear infinite reverse;
-        }
-
-        .loading-logo::after {
-            content: '';
-            position: absolute;
-            top: -6px;
-            left: -6px;
-            right: -6px;
-            bottom: -6px;
-            border: 2px solid transparent;
-            border-bottom: 2px solid rgba(255, 0, 102, 0.5);
-            border-left: 2px solid rgba(0, 255, 204, 0.5);
-            border-radius: 50%;
-            animation: logoSpin 3s linear infinite;
-        }
-
-        @keyframes logoSpin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .loading-text {
-            font-family: 'Orbitron', monospace;
-            font-size: 32px;
-            color: #00ffcc;
-            text-shadow: 0 0 30px #00ffcc, 0 0 60px #ff0066;
+            max-width: 800px;
             margin-bottom: 20px;
-            animation: textPulse 1.5s ease-in-out infinite alternate;
-            position: relative;
         }
 
-        .loading-text::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, transparent, rgba(0, 255, 204, 0.1), transparent);
-            animation: textScan 2s linear infinite;
+        .terminal-controls {
+            display: flex;
+            gap: 10px;
         }
 
-        @keyframes textScan {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
+        .terminal-control {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
         }
 
-        .loading-progress {
-            width: 400px;
-            height: 6px;
-            background: rgba(0, 255, 204, 0.2);
-            border-radius: 3px;
-            overflow: hidden;
-            margin: 30px auto;
-            position: relative;
-            border: 1px solid rgba(0, 255, 204, 0.3);
-        }
+        .terminal-control.close { background: var(--accent-red); }
+        .terminal-control.minimize { background: var(--accent-yellow); }
+        .terminal-control.maximize { background: var(--accent-cyan); }
 
-        .loading-bar {
-            width: 0;
-            height: 100%;
-            background: linear-gradient(90deg, #00ffcc, #ff0066, #00ffcc, #ff0066);
-            background-size: 200% 100%;
-            border-radius: 3px;
-            animation: loadingProgress 4s ease-out forwards, barShimmer 1s linear infinite;
-            position: relative;
-        }
-
-        .loading-bar::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: -10px;
-            width: 10px;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, #ffffff, transparent);
-            animation: loadingGlow 2s ease-in-out infinite;
-        }
-
-        @keyframes loadingProgress {
-            0% { width: 0; }
-            100% { width: 100%; }
-        }
-
-        @keyframes barShimmer {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 200% 50%; }
-        }
-
-        @keyframes loadingGlow {
-            0%, 100% { opacity: 0; }
-            50% { opacity: 1; }
-        }
-
-        .loading-status {
+        .terminal-loader-content {
+            width: 100%;
+            max-width: 800px;
             font-family: 'JetBrains Mono', monospace;
-            color: #ff0066;
-            margin-top: 25px;
-            font-size: 16px;
-            letter-spacing: 2px;
+            color: var(--accent-cyan);
         }
 
-        .loading-percentage {
-            font-family: 'Orbitron', monospace;
-            color: #00ffcc;
-            font-size: 24px;
-            margin-top: 15px;
-            text-shadow: 0 0 20px #00ffcc;
+        .terminal-line {
+            margin-bottom: 10px;
+            overflow: hidden;
+            white-space: nowrap;
+            animation: typeLine 2s steps(40, end);
         }
 
-        @keyframes textPulse {
-            from { 
-                opacity: 0.7;
-                transform: scale(1);
-            }
-            to { 
-                opacity: 1;
-                transform: scale(1.05);
-            }
+        .terminal-prompt {
+            color: var(--accent-purple);
+            margin-right: 10px;
         }
 
-        /* Enhanced Mouse Click Effects */
-        .click-effect {
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            border-radius: 50%;
-            border: 3px solid #00ffcc;
-            animation: clickExpand 0.8s ease-out forwards;
+        .terminal-cursor {
+            display: inline-block;
+            background-color: var(--accent-cyan);
+            width: 8px;
+            height: 18px;
+            animation: blink 1s infinite;
         }
 
-        .click-effect.red {
-            border-color: #ff0066;
-            box-shadow: 0 0 30px #ff0066, inset 0 0 20px rgba(255, 0, 102, 0.3);
+        @keyframes typeLine {
+            from { width: 0; }
+            to { width: 100%; }
         }
 
-        .click-effect.cyan {
-            border-color: #00ffcc;
-            box-shadow: 0 0 30px #00ffcc, inset 0 0 20px rgba(0, 255, 204, 0.3);
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
         }
 
-        .click-effect::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 10px;
-            height: 10px;
-            background: inherit;
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            animation: innerPulse 0.8s ease-out forwards;
-        }
-
-        @keyframes clickExpand {
-            from {
-                width: 0;
-                height: 0;
-                opacity: 1;
-                transform: rotate(0deg);
-            }
-            to {
-                width: 120px;
-                height: 120px;
-                opacity: 0;
-                transform: rotate(360deg);
-            }
-        }
-
-        @keyframes innerPulse {
-            from {
-                width: 10px;
-                height: 10px;
-                opacity: 1;
-            }
-            to {
-                width: 30px;
-                height: 30px;
-                opacity: 0;
-            }
-        }
-
-        /* Advanced Cyberpunk Grid */
-        body::before {
-            content: '';
+        /* Hacking Effect Overlay */
+        .hacking-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
-                linear-gradient(rgba(0, 255, 204, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 255, 204, 0.05) 1px, transparent 1px),
-                linear-gradient(rgba(255, 0, 102, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 0, 102, 0.03) 1px, transparent 1px),
-                radial-gradient(circle at 25% 25%, rgba(0, 255, 204, 0.02) 2px, transparent 2px),
-                radial-gradient(circle at 75% 75%, rgba(255, 0, 102, 0.02) 2px, transparent 2px);
-            background-size: 40px 40px, 40px 40px, 80px 80px, 80px 80px, 60px 60px, 60px 60px;
-            z-index: -1;
-            animation: gridShift 25s linear infinite;
+            background: linear-gradient(to bottom, rgba(0, 255, 204, 0.1) 0%, rgba(0, 0, 0, 0) 5%);
+            background-size: 100% 5px;
+            z-index: 2;
+            pointer-events: none;
+            opacity: 0.3;
         }
 
-        @keyframes gridShift {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(40px, 40px); }
+        /* Cyber Grid Background */
+        .cyber-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 204, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 204, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 0;
+            perspective: 1000px;
         }
 
-        /* Enhanced Matrix Rain */
+        /* Enhanced Matrix Rain with Glitch Effect */
         .matrix-rain {
             position: fixed;
             top: 0;
@@ -321,6 +231,14 @@
             pointer-events: none;
             z-index: 1;
             overflow: hidden;
+            opacity: var(--matrix-opacity);
+            filter: blur(1px);
+            transition: opacity 0.3s ease, filter 0.3s ease;
+        }
+
+        .matrix-rain.enhanced {
+            opacity: calc(var(--matrix-opacity) * 2);
+            filter: blur(0.5px);
         }
 
         .matrix-column {
@@ -328,19 +246,9 @@
             top: -100px;
             font-family: 'JetBrains Mono', monospace;
             font-size: 14px;
-            color: #00ffcc;
+            color: var(--accent-cyan);
             animation: matrixFall linear infinite;
-            opacity: 0.4;
             text-shadow: 0 0 10px currentColor;
-        }
-
-        .matrix-column.red {
-            color: #ff0066;
-        }
-
-        .matrix-column.white {
-            color: #ffffff;
-            opacity: 0.2;
         }
 
         @keyframes matrixFall {
@@ -360,37 +268,524 @@
             }
         }
 
+        /* Cyber Noise Effect */
+        .cyber-noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.05;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Enhanced Glitch Effect */
+        .enhanced-glitch {
+            position: relative;
+            animation: glitch-skew 1s infinite linear alternate-reverse;
+        }
+        
+        .enhanced-glitch::before,
+        .enhanced-glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            clip: rect(0, 0, 0, 0);
+        }
+        
+        .enhanced-glitch::before {
+            left: 2px;
+            text-shadow: -2px 0 var(--accent-red);
+            animation: glitch-anim 3s infinite linear alternate-reverse;
+        }
+        
+        .enhanced-glitch::after {
+            left: -2px;
+            text-shadow: -2px 0 var(--accent-cyan);
+            animation: glitch-anim2 2s infinite linear alternate-reverse;
+        }
+        
+        @keyframes glitch-anim {
+            0% { clip: rect(42px, 9999px, 44px, 0); }
+            5% { clip: rect(12px, 9999px, 59px, 0); }
+            10% { clip: rect(48px, 9999px, 29px, 0); }
+            15% { clip: rect(42px, 9999px, 73px, 0); }
+            20% { clip: rect(63px, 9999px, 27px, 0); }
+            25% { clip: rect(34px, 9999px, 55px, 0); }
+            30% { clip: rect(86px, 9999px, 73px, 0); }
+            35% { clip: rect(20px, 9999px, 20px, 0); }
+            40% { clip: rect(26px, 9999px, 60px, 0); }
+            45% { clip: rect(25px, 9999px, 66px, 0); }
+            50% { clip: rect(57px, 9999px, 98px, 0); }
+            55% { clip: rect(5px, 9999px, 46px, 0); }
+            60% { clip: rect(82px, 9999px, 31px, 0); }
+            65% { clip: rect(54px, 9999px, 27px, 0); }
+            70% { clip: rect(28px, 9999px, 99px, 0); }
+            75% { clip: rect(45px, 9999px, 69px, 0); }
+            80% { clip: rect(23px, 9999px, 85px, 0); }
+            85% { clip: rect(54px, 9999px, 84px, 0); }
+            90% { clip: rect(45px, 9999px, 47px, 0); }
+            95% { clip: rect(24px, 9999px, 23px, 0); }
+            100% { clip: rect(32px, 9999px, 92px, 0); }
+        }
+        
+        @keyframes glitch-anim2 {
+            0% { clip: rect(65px, 9999px, 100px, 0); }
+            5% { clip: rect(52px, 9999px, 74px, 0); }
+            10% { clip: rect(79px, 9999px, 85px, 0); }
+            15% { clip: rect(75px, 9999px, 5px, 0); }
+            20% { clip: rect(67px, 9999px, 61px, 0); }
+            25% { clip: rect(14px, 9999px, 79px, 0); }
+            30% { clip: rect(1px, 9999px, 66px, 0); }
+            35% { clip: rect(86px, 9999px, 30px, 0); }
+            40% { clip: rect(23px, 9999px, 98px, 0); }
+            45% { clip: rect(85px, 9999px, 72px, 0); }
+            50% { clip: rect(71px, 9999px, 75px, 0); }
+            55% { clip: rect(2px, 9999px, 48px, 0); }
+            60% { clip: rect(30px, 9999px, 16px, 0); }
+            65% { clip: rect(59px, 9999px, 50px, 0); }
+            70% { clip: rect(41px, 9999px, 62px, 0); }
+            75% { clip: rect(2px, 9999px, 82px, 0); }
+            80% { clip: rect(47px, 9999px, 73px, 0); }
+            85% { clip: rect(3px, 9999px, 27px, 0); }
+            90% { clip: rect(26px, 9999px, 55px, 0); }
+            95% { clip: rect(42px, 9999px, 97px, 0); }
+            100% { clip: rect(38px, 9999px, 49px, 0); }
+        }
+        
+        @keyframes glitch-skew {
+            0% { transform: skew(0deg); }
+            10% { transform: skew(2deg); }
+            20% { transform: skew(0deg); }
+            30% { transform: skew(-2deg); }
+            40% { transform: skew(0deg); }
+            50% { transform: skew(1deg); }
+            60% { transform: skew(0deg); }
+            70% { transform: skew(-1deg); }
+            80% { transform: skew(0deg); }
+            90% { transform: skew(2deg); }
+            100% { transform: skew(0deg); }
+        }
+
+        /* Holographic Effect */
+        .holographic {
+            background: linear-gradient(125deg, 
+                rgba(0, 255, 204, 0.1), 
+                rgba(189, 0, 255, 0.1), 
+                rgba(255, 0, 102, 0.1));
+            background-size: 200% 200%;
+            animation: holographicShift 5s ease infinite;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @keyframes holographicShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Hex Grid Background */
+        .hex-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .hex {
+            position: absolute;
+            width: 100px;
+            height: 57.74px;
+            background-color: var(--accent-cyan);
+            margin: 28.87px 0;
+            animation: hexPulse 8s infinite ease-in-out;
+        }
+
+        .hex::before,
+        .hex::after {
+            content: "";
+            position: absolute;
+            width: 0;
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+        }
+
+        .hex::before {
+            bottom: 100%;
+            border-bottom: 28.87px solid var(--accent-cyan);
+        }
+
+        .hex::after {
+            top: 100%;
+            border-top: 28.87px solid var(--accent-cyan);
+        }
+
+        @keyframes hexPulse {
+            0%, 100% { opacity: 0.1; transform: scale(0.95); }
+            50% { opacity: 0.2; transform: scale(1.05); }
+        }
+
+        /* Particle Network */
+        .particle-network {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background-color: var(--accent-cyan);
+            border-radius: 50%;
+            animation: particleFloat 15s infinite ease-in-out;
+        }
+
+        @keyframes particleFloat {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+            25% { transform: translateY(-20px) translateX(10px); opacity: 0.7; }
+            50% { transform: translateY(-35px) translateX(-10px); opacity: 0.3; }
+            75% { transform: translateY(-15px) translateX(15px); opacity: 0.5; }
+        }
+
+        /* Controls Panel */
+        .controls-panel {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(15px);
+            z-index: 1001;
+            min-width: 250px;
+            box-shadow: 0 10px 30px var(--shadow-color);
+            transition: all 0.3s ease;
+        }
+
+        .control-group {
+            margin-bottom: 15px;
+        }
+
+        .control-group h4 {
+            color: var(--accent-cyan);
+            margin-bottom: 10px;
+            font-family: 'Orbitron', monospace;
+            font-size: 14px;
+        }
+
+        .toggle-switch {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .toggle-switch label {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background: var(--border-color);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .switch.active {
+            background: var(--accent-cyan);
+        }
+
+        .switch::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+
+        .switch.active::after {
+            transform: translateX(30px);
+        }
+
+        /* Theme Selection */
+        .theme-selector {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .theme-option {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .theme-option.active {
+            border-color: white;
+            transform: scale(1.2);
+        }
+
+        .theme-option.cyber {
+            background: linear-gradient(45deg, #00ffcc, #bd00ff);
+        }
+
+        .theme-option.matrix {
+            background: linear-gradient(45deg, #00ff00, #003300);
+        }
+
+        .theme-option.terminal {
+            background: linear-gradient(45deg, #ffffff, #aaaaaa);
+        }
+
+        .theme-option.dark-red {
+            background: linear-gradient(45deg, #ff0066, #990033);
+        }
+
+        .theme-option.purple-haze {
+            background: linear-gradient(45deg, #6600cc, #330066);
+        }
+
+        .theme-option.sunset {
+            background: linear-gradient(45deg, #ff9900, #ff0066);
+        }
+
+        /* AI Chat Interface */
+        .ai-chat-container {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 350px;
+            height: 500px;
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 20px;
+            display: none;
+            flex-direction: column;
+            z-index: 1002;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 20px 50px var(--shadow-color);
+            animation: slideUp 0.3s ease-out;
+        }
+
+        .ai-chat-container.active {
+            display: flex;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chat-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--accent-cyan);
+            color: var(--bg-primary);
+            border-radius: 18px 18px 0 0;
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+        }
+
+        .chat-close {
+            background: none;
+            border: none;
+            color: var(--bg-primary);
+            font-size: 20px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .chat-close:hover {
+            transform: scale(1.2);
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 12px 18px;
+            border-radius: 18px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .message.user {
+            background: var(--accent-cyan);
+            color: var(--bg-primary);
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+        }
+
+        .message.ai {
+            background: var(--border-color);
+            color: var(--text-primary);
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
+
+        .typing-indicator {
+            display: none;
+            align-self: flex-start;
+            padding: 12px 18px;
+            background: var(--border-color);
+            border-radius: 18px;
+            border-bottom-left-radius: 5px;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-cyan);
+            animation: typingAnimation 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typingAnimation {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: 0.3;
+            }
+            30% {
+                transform: translateY(-10px);
+                opacity: 1;
+            }
+        }
+
+        .chat-input-container {
+            padding: 20px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: 25px;
+            background: transparent;
+            color: var(--text-primary);
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .chat-input:focus {
+            border-color: var(--accent-cyan);
+        }
+
+        .chat-send {
+            width: 45px;
+            height: 45px;
+            border: none;
+            background: var(--accent-cyan);
+            color: var(--bg-primary);
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .chat-send:hover {
+            background: var(--accent-red);
+            transform: scale(1.1);
+        }
+
+        /* Floating Action Button */
+        .fab {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--accent-cyan);
+            color: var(--bg-primary);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 10px 30px var(--shadow-color);
+            transition: all 0.3s ease;
+            z-index: 1001;
+        }
+
+        .fab:hover {
+            background: var(--accent-red);
+            transform: scale(1.1);
+        }
+
         /* Enhanced Navigation */
         .nav {
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(15, 15, 35, 0.95);
+            background: var(--card-bg);
             backdrop-filter: blur(20px);
-            border-bottom: 2px solid transparent;
-            background-image: linear-gradient(rgba(15, 15, 35, 0.95), rgba(15, 15, 35, 0.95)), 
-                             linear-gradient(90deg, #00ffcc, #ff0066, #00ffcc);
-            background-origin: border-box;
-            background-clip: content-box, border-box;
+            border-bottom: 2px solid var(--border-color);
             z-index: 1000;
             padding: 15px 0;
             transition: all 0.3s ease;
-        }
-
-        .nav::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, transparent, rgba(0, 255, 204, 0.1), transparent);
-            animation: navScan 6s ease-in-out infinite;
-        }
-
-        @keyframes navScan {
-            0%, 100% { transform: translateX(-100%); }
-            50% { transform: translateX(100%); }
         }
 
         .nav-container {
@@ -400,8 +795,6 @@
             justify-content: space-between;
             align-items: center;
             padding: 0 20px;
-            position: relative;
-            z-index: 2;
         }
 
         .logo-container {
@@ -409,140 +802,86 @@
             align-items: center;
             gap: 15px;
             cursor: pointer;
-            position: relative;
         }
 
         .logo-img {
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            border: 2px solid #00ffcc;
-            box-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
+            border: 2px solid var(--accent-cyan);
+            box-shadow: 0 0 20px var(--shadow-color);
             transition: all 0.4s ease;
             object-fit: cover;
-            position: relative;
-        }
-
-        .logo-img::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            border-radius: 50%;
-            background: conic-gradient(from 0deg, #00ffcc, #ff0066, #00ffcc);
-            z-index: -1;
-            animation: logoHalo 3s linear infinite;
-        }
-
-        @keyframes logoHalo {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .logo-img:hover {
-            box-shadow: 0 0 40px rgba(0, 255, 204, 0.8), 0 0 80px rgba(255, 0, 102, 0.3);
-            transform: scale(1.15) rotate(15deg);
-            filter: brightness(1.3);
         }
 
         .logo {
             font-family: 'Orbitron', monospace;
             font-size: 28px;
             font-weight: 900;
-            color: #00ffcc;
-            text-shadow: 0 0 15px #00ffcc;
-            position: relative;
-        }
-
-        .logo::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, #00ffcc, #ff0066);
-            animation: logoUnderline 3s ease-in-out infinite alternate;
-        }
-
-        @keyframes logoUnderline {
-            0% { width: 0; opacity: 0; }
-            100% { width: 100%; opacity: 1; }
+            color: var(--accent-cyan);
+            text-shadow: 0 0 15px var(--shadow-color);
         }
 
         .nav-links {
             display: flex;
             list-style: none;
             gap: 35px;
+            align-items: center;
         }
 
         .nav-links a {
-            color: #ffffff;
+            color: var(--text-primary);
             text-decoration: none;
             font-size: 16px;
             font-weight: 600;
             transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 1px;
-            position: relative;
             padding: 12px 20px;
             cursor: pointer;
             border-radius: 5px;
-        }
-
-        .nav-links a::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            width: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #00ffcc, #ff0066);
-            transition: all 0.4s ease;
-            transform: translateX(-50%);
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 255, 204, 0.1);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            border-radius: 5px;
-            border: 1px solid rgba(0, 255, 204, 0.3);
-        }
-
-        .nav-links a:hover::before {
-            width: 80%;
-        }
-
-        .nav-links a:hover::after {
-            opacity: 1;
+            position: relative;
         }
 
         .nav-links a:hover {
-            color: #00ffcc;
-            text-shadow: 0 0 20px #00ffcc;
-            transform: translateY(-3px) scale(1.05);
+            color: var(--accent-cyan);
+            text-shadow: 0 0 20px var(--shadow-color);
         }
 
         .nav-links a.active {
-            color: #ff0066;
-            text-shadow: 0 0 20px #ff0066;
+            color: var(--accent-red);
             background: rgba(255, 0, 102, 0.1);
-            border: 1px solid rgba(255, 0, 102, 0.3);
+            border: 1px solid var(--accent-red);
         }
 
-        /* Enhanced Hero Section */
+        /* Page System */
+        .page {
+            display: none;
+            min-height: 100vh;
+            animation: pageSlideIn 0.8s ease-out;
+            position: relative;
+            z-index: 5;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes pageSlideIn {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 25%, #2d1b69 50%, #1a1a2e 75%, #0f0f23 100%);
-            color: #00ffcc;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-primary) 100%);
+            color: var(--accent-cyan);
             text-align: center;
             padding: 200px 20px 140px;
             position: relative;
@@ -551,48 +890,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(0, 255, 204, 0.15) 0%, transparent 60%),
-                radial-gradient(circle at 80% 20%, rgba(255, 0, 102, 0.12) 0%, transparent 60%),
-                radial-gradient(circle at 40% 80%, rgba(0, 255, 204, 0.1) 0%, transparent 50%),
-                conic-gradient(from 0deg at 50% 50%, transparent, rgba(255, 0, 102, 0.05), transparent);
-            animation: energyPulse 8s ease-in-out infinite alternate;
-        }
-
-        .hero::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="circuit" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M0 10h20M10 0v20M5 5h10M15 15h5" stroke="rgba(0,255,204,0.1)" stroke-width="0.5"/><circle cx="10" cy="10" r="1" fill="rgba(255,0,102,0.3)"/></pattern></defs><rect width="100" height="100" fill="url(%23circuit)"/></svg>');
-            animation: circuitFlow 20s linear infinite;
-        }
-
-        @keyframes energyPulse {
-            0% { 
-                opacity: 0.8;
-                transform: scale(1) rotate(0deg);
-            }
-            100% { 
-                opacity: 1;
-                transform: scale(1.08) rotate(2deg);
-            }
-        }
-
-        @keyframes circuitFlow {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            100% { transform: translate(20px, 20px) rotate(360deg); }
         }
 
         .hero-content {
@@ -607,29 +904,12 @@
             font-size: clamp(4rem, 12vw, 8rem);
             font-weight: 900;
             margin-bottom: 25px;
-            background: linear-gradient(45deg, #00ffcc, #ff0066, #ffffff, #00ffcc);
+            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-red), var(--accent-purple), var(--accent-cyan));
             background-size: 300% 300%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: neonGlow 3s ease-in-out infinite alternate, gradientShift 5s ease infinite;
-            position: relative;
-        }
-
-        .hero h1::before {
-            content: 'vendetta4c';
-            position: absolute;
-            top: 0;
-            left: 0;
-            color: #ff0066;
-            z-index: -1;
-            animation: glitchShift 4s infinite;
-        }
-
-        @keyframes glitchShift {
-            0%, 90%, 100% { transform: translate(0); }
-            92% { transform: translate(-2px, 2px); }
-            94% { transform: translate(2px, -2px); }
-            96% { transform: translate(-1px, 1px); }
+            animation: gradientShift 5s ease infinite;
+            text-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
         }
 
         .hero h2 {
@@ -637,13 +917,7 @@
             margin-bottom: 20px;
             opacity: 0.9;
             font-weight: 600;
-            text-shadow: 0 0 15px rgba(255, 0, 102, 0.5);
-            animation: typewriter 3s steps(50) 1s both;
-        }
-
-        @keyframes typewriter {
-            from { width: 0; }
-            to { width: 100%; }
+            color: var(--text-secondary);
         }
 
         .hero p {
@@ -651,102 +925,21 @@
             opacity: 0.8;
             margin-bottom: 50px;
             letter-spacing: 1px;
-            animation: fadeInUp 1s ease 2s both;
+            color: var(--text-secondary);
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 0.8;
-                transform: translateY(0);
-            }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        /* Enhanced Scanner Lines */
-        .scanner-line {
-            position: absolute;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, #ff0066, #ffffff, #ff0066, transparent);
-            animation: scannerMove 10s linear infinite;
-            opacity: 0.7;
-            box-shadow: 0 0 20px #ff0066;
-        }
-
-        .scanner-line:nth-child(2) {
-            animation-delay: 3s;
-            background: linear-gradient(90deg, transparent, #00ffcc, #ffffff, #00ffcc, transparent);
-            box-shadow: 0 0 20px #00ffcc;
-        }
-
-        @keyframes scannerMove {
-            0% { top: 0%; opacity: 0; }
-            5% { opacity: 0.7; }
-            95% { opacity: 0.7; }
-            100% { top: 100%; opacity: 0; }
-        }
-
-        /* Multiple Energy Rings */
-        .energy-ring {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 300px;
-            height: 300px;
-            border: 2px solid rgba(0, 255, 204, 0.3);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            animation: energyRing 6s linear infinite;
-        }
-
-        .energy-ring:nth-child(2) {
-            width: 450px;
-            height: 450px;
-            border-color: rgba(255, 0, 102, 0.2);
-            animation-delay: 2s;
-            animation-duration: 8s;
-        }
-
-        .energy-ring:nth-child(3) {
-            width: 600px;
-            height: 600px;
-            border-color: rgba(255, 255, 255, 0.1);
-            animation-delay: 4s;
-            animation-duration: 10s;
-        }
-
-        .energy-ring::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            border: 2px solid rgba(255, 0, 102, 0.3);
-            border-radius: 50%;
-            animation: energyRing 6s linear infinite reverse;
-        }
-
-        @keyframes energyRing {
-            0% { 
-                transform: translate(-50%, -50%) rotate(0deg) scale(1);
-                opacity: 1;
-            }
-            100% { 
-                transform: translate(-50%, -50%) rotate(360deg) scale(1.5);
-                opacity: 0;
-            }
-        }
-
-        /* Enhanced Buttons */
-        .cta-button, .nav-button {
+        /* Buttons */
+        .cta-button {
             display: inline-block;
             background: transparent;
-            border: 2px solid #00ffcc;
-            color: #00ffcc;
+            border: 2px solid var(--accent-cyan);
+            color: var(--accent-cyan);
             padding: 20px 45px;
             text-decoration: none;
             font-family: 'Orbitron', monospace;
@@ -756,142 +949,72 @@
             transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
-            z-index: 1;
             cursor: pointer;
             margin: 10px;
             border-radius: 5px;
         }
 
-        .cta-button::before, .nav-button::before {
+        .cta-button:hover {
+            background: var(--accent-cyan);
+            color: var(--bg-primary);
+            box-shadow: 0 0 30px var(--shadow-color);
+            transform: translateY(-5px);
+        }
+
+        .cyber-button {
+            display: inline-block;
+            padding: 20px 45px;
+            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-purple));
+            color: var(--bg-primary);
+            text-decoration: none;
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            margin: 10px;
+            z-index: 1;
+        }
+
+        .cyber-button::before {
             content: '';
             position: absolute;
             top: 0;
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, #00ffcc, transparent);
-            transition: left 0.6s ease;
-            z-index: -1;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
         }
 
-        .cta-button::after, .nav-button::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: radial-gradient(circle, rgba(255, 0, 102, 0.3), transparent);
-            transition: all 0.4s ease;
-            transform: translate(-50%, -50%);
-            border-radius: 50%;
-        }
-
-        .cta-button:hover::before, .nav-button:hover::before {
+        .cyber-button:hover::before {
             left: 100%;
         }
 
-        .cta-button:hover::after, .nav-button:hover::after {
-            width: 200px;
-            height: 200px;
+        .cyber-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 255, 204, 0.5);
         }
 
-        .cta-button:hover, .nav-button:hover {
-            background: rgba(0, 255, 204, 0.15);
-            box-shadow: 
-                0 0 30px #00ffcc,
-                inset 0 0 30px rgba(0, 255, 204, 0.1),
-                0 15px 35px rgba(0, 255, 204, 0.3);
-            transform: translateY(-5px) scale(1.08);
-            color: #ffffff;
-            text-shadow: 0 0 10px #ffffff;
-        }
-
-        /* Enhanced Sections */
+        /* Sections */
         .section {
             max-width: 1400px;
             margin: 0 auto;
             padding: 100px 20px;
             position: relative;
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.8s ease;
-        }
-
-        .section.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .section-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 10% 20%, rgba(255, 0, 102, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 90% 80%, rgba(0, 255, 204, 0.08) 0%, transparent 50%),
-                conic-gradient(from 0deg at 30% 70%, transparent, rgba(0, 255, 204, 0.05), transparent);
-            animation: energyFlow 12s ease-in-out infinite alternate;
-        }
-
-        @keyframes energyFlow {
-            0% { 
-                opacity: 0.5; 
-                transform: scale(1) rotate(0deg); 
-            }
-            100% { 
-                opacity: 1; 
-                transform: scale(1.03) rotate(1deg); 
-            }
         }
 
         .section h2 {
             font-family: 'Orbitron', monospace;
             font-size: clamp(2.8rem, 7vw, 4rem);
             margin-bottom: 40px;
-            position: relative;
-            z-index: 2;
-            background: linear-gradient(45deg, #00ffcc, #ff0066, #ffffff, #00ffcc);
-            background-size: 300% 300%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: gradientShift 6s ease infinite, textGlow 3s ease-in-out infinite alternate;
+            color: var(--accent-cyan);
             text-align: center;
-        }
-
-        .section h2::before {
-            content: '';
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            right: -10px;
-            bottom: -10px;
-            background: linear-gradient(45deg, rgba(0, 255, 204, 0.1), rgba(255, 0, 102, 0.1));
-            z-index: -1;
-            border-radius: 10px;
-            animation: headerGlow 4s ease-in-out infinite alternate;
-        }
-
-        @keyframes headerGlow {
-            from { opacity: 0.3; transform: scale(1); }
-            to { opacity: 0.7; transform: scale(1.02); }
-        }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        @keyframes textGlow {
-            from {
-                filter: drop-shadow(0 0 8px #00ffcc) drop-shadow(0 0 15px #ff0066);
-            }
-            to {
-                filter: drop-shadow(0 0 15px #00ffcc) drop-shadow(0 0 30px #ff0066);
-            }
         }
 
         .section-description {
@@ -900,24 +1023,20 @@
             opacity: 0.9;
             line-height: 1.7;
             text-align: center;
-            position: relative;
-            z-index: 2;
-            animation: fadeInUp 0.8s ease 0.3s both;
+            color: var(--text-secondary);
         }
 
-        /* Enhanced Feature Cards */
+        /* Feature Cards */
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 35px;
             margin-top: 50px;
-            position: relative;
-            z-index: 2;
         }
 
         .feature-card {
-            background: rgba(0, 0, 0, 0.6);
-            border: 2px solid rgba(0, 255, 204, 0.3);
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
             border-radius: 20px;
             padding: 40px;
             transition: all 0.5s ease;
@@ -927,684 +1046,342 @@
             cursor: pointer;
         }
 
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 255, 204, 0.1), rgba(255, 0, 102, 0.1), transparent);
-            transition: left 0.8s ease;
-        }
-
-        .feature-card::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: conic-gradient(from 0deg, transparent, rgba(0, 255, 204, 0.1), transparent, rgba(255, 0, 102, 0.1), transparent);
-            opacity: 0;
-            transition: all 0.6s ease;
-            animation: cardSpin 10s linear infinite;
-        }
-
-        @keyframes cardSpin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .feature-card:hover::before {
-            left: 100%;
-        }
-
-        .feature-card:hover::after {
-            opacity: 1;
-        }
-
         .feature-card:hover {
-            border-color: #ff0066;
-            box-shadow: 
-                0 20px 60px rgba(0, 255, 204, 0.4),
-                0 0 80px rgba(255, 0, 102, 0.3),
-                inset 0 0 30px rgba(0, 255, 204, 0.1);
-            transform: translateY(-15px) rotateX(10deg) scale(1.05);
+            border-color: var(--accent-red);
+            box-shadow: 0 20px 60px var(--shadow-color);
+            transform: translateY(-15px);
         }
 
         .feature-card h3 {
             font-family: 'Orbitron', monospace;
-            color: #00ffcc;
+            color: var(--accent-cyan);
             margin-bottom: 25px;
             font-size: 1.8rem;
             font-weight: 700;
-            text-shadow: 0 0 15px rgba(0, 255, 204, 0.5);
-            transition: all 0.4s ease;
-            position: relative;
-        }
-
-        .feature-card h3::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #00ffcc, #ff0066);
-            transition: width 0.5s ease;
-        }
-
-        .feature-card:hover h3 {
-            color: #ff0066;
-            text-shadow: 0 0 20px rgba(255, 0, 102, 0.8);
-            transform: translateX(10px);
-        }
-
-        .feature-card:hover h3::after {
-            width: 100%;
         }
 
         .feature-card p {
             opacity: 0.85;
             line-height: 1.7;
             font-size: 1.15rem;
-            transition: all 0.3s ease;
+            color: var(--text-secondary);
         }
 
-        .feature-card:hover p {
-            opacity: 1;
-            transform: translateX(5px);
+        /* CyberSec Badges */
+        .badges-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 40px 0;
         }
 
-        /* Enhanced Glitch Effect */
-        .glitch {
-            position: relative;
-            display: inline-block;
-        }
-
-        .glitch::before,
-        .glitch::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0.8;
-        }
-
-        .glitch::before {
-            animation: glitch1 3s infinite;
-            color: #ff0066;
-            z-index: -1;
-            text-shadow: 0 0 10px #ff0066;
-        }
-
-        .glitch::after {
-            animation: glitch2 3s infinite;
-            color: #00ffcc;
-            z-index: -2;
-            text-shadow: 0 0 10px #00ffcc;
-        }
-
-        @keyframes glitch1 {
-            0%, 14%, 15%, 49%, 50%, 99%, 100% {
-                transform: translate(0);
-                filter: hue-rotate(0deg);
-            }
-            15%, 49% {
-                transform: translate(-3px, 3px);
-                filter: hue-rotate(90deg);
-            }
-        }
-
-        @keyframes glitch2 {
-            0%, 20%, 21%, 62%, 63%, 99%, 100% {
-                transform: translate(0);
-                filter: hue-rotate(0deg);
-            }
-            21%, 62% {
-                transform: translate(3px, -3px);
-                filter: hue-rotate(180deg);
-            }
-        }
-
-        /* Portfolio Grid Enhancement */
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-            gap: 35px;
-            margin-top: 60px;
-        }
-
-        .portfolio-item {
-            background: rgba(0, 0, 0, 0.7);
-            border: 2px solid rgba(0, 255, 204, 0.3);
-            border-radius: 20px;
-            overflow: hidden;
-            transition: all 0.6s ease;
-            position: relative;
-            cursor: pointer;
-        }
-
-        .portfolio-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, rgba(0, 255, 204, 0.1), rgba(255, 0, 102, 0.1));
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-
-        .portfolio-item::after {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, #00ffcc, #ff0066, #00ffcc);
-            z-index: -1;
-            border-radius: 20px;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-
-        .portfolio-item:hover::before {
-            opacity: 1;
-        }
-
-        .portfolio-item:hover::after {
-            opacity: 1;
-        }
-
-        .portfolio-item:hover {
-            transform: translateY(-10px) scale(1.03) rotateX(5deg);
-            box-shadow: 0 25px 60px rgba(0, 255, 204, 0.4);
-            border-color: #ff0066;
-        }
-
-        .portfolio-image {
-            width: 100%;
-            height: 220px;
-            background: linear-gradient(135deg, #1a1a2e, #2d1b69, #1a1a2e);
+        .cyber-badge {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: 2px solid var(--accent-cyan);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Orbitron', monospace;
-            font-size: 28px;
-            color: #00ffcc;
-            text-shadow: 0 0 20px #00ffcc;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .portfolio-image::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, transparent, rgba(255, 0, 102, 0.1), transparent);
-            animation: imageGlow 4s ease-in-out infinite alternate;
-        }
-
-        @keyframes imageGlow {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .portfolio-content {
-            padding: 30px;
-            position: relative;
-        }
-
-        .portfolio-item h3 {
-            font-family: 'Orbitron', monospace;
-            color: #00ffcc;
-            font-size: 1.6rem;
-            margin-bottom: 18px;
-            transition: all 0.3s ease;
-        }
-
-        .portfolio-item:hover h3 {
-            color: #ff0066;
-            text-shadow: 0 0 15px #ff0066;
-        }
-
-        .portfolio-item p {
-            opacity: 0.85;
-            line-height: 1.6;
-            margin-bottom: 20px;
-            font-size: 1.1rem;
-        }
-
-        .tech-stack {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .tech-tag {
-            background: rgba(255, 0, 102, 0.2);
-            border: 1px solid #ff0066;
-            color: #ff0066;
-            padding: 6px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-family: 'JetBrains Mono', monospace;
+            font-size: 40px;
+            color: var(--accent-cyan);
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
         }
 
-        .tech-tag::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 255, 204, 0.3), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .tech-tag:hover::before {
-            left: 100%;
-        }
-
-        .tech-tag:hover {
-            background: rgba(0, 255, 204, 0.2);
-            border-color: #00ffcc;
-            color: #00ffcc;
-            transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(0, 255, 204, 0.5);
-        }
-
-        /* Enhanced Contact Section */
-        .contact {
-            background: linear-gradient(135deg, #1a1a2e 0%, #2d1b69 50%, #1a1a2e 100%);
-            padding: 100px 20px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .contact::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                conic-gradient(from 0deg, transparent, rgba(0, 255, 204, 0.1), transparent, rgba(255, 0, 102, 0.1), transparent),
-                radial-gradient(circle at 30% 40%, rgba(0, 255, 204, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 70% 60%, rgba(255, 0, 102, 0.05) 0%, transparent 50%);
-            animation: conicRotate 15s linear infinite;
-        }
-
-        @keyframes conicRotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .contact-content {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-        }
-
-        .contact-email {
-            font-size: 1.6rem;
-            color: #00ffcc;
-            text-decoration: none;
-            border: 3px solid #00ffcc;
-            padding: 25px 50px;
-            display: inline-block;
-            margin: 25px;
-            transition: all 0.5s ease;
-            font-family: 'Orbitron', monospace;
-            font-weight: 600;
-            position: relative;
-            overflow: hidden;
-            border-radius: 10px;
-        }
-
-        .contact-email::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, #00ffcc, #ff0066, #00ffcc);
-            transition: left 0.5s ease;
-            z-index: -1;
-        }
-
-        .contact-email::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.2), transparent);
-            transition: all 0.5s ease;
-            transform: translate(-50%, -50%);
-            border-radius: 50%;
-        }
-
-        .contact-email:hover::before {
-            left: 0;
-        }
-
-        .contact-email:hover::after {
-            width: 300px;
-            height: 300px;
-        }
-
-        .contact-email:hover {
-            color: #0f0f23;
-            box-shadow: 
-                0 0 40px #00ffcc,
-                0 0 80px rgba(255, 0, 102, 0.5),
-                0 20px 50px rgba(0, 255, 204, 0.3);
-            transform: scale(1.1) translateY(-5px);
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-top: 50px;
-            flex-wrap: wrap;
-        }
-
-        .social-link {
-            color: #00ffcc;
-            text-decoration: none;
-            font-family: 'Orbitron', monospace;
-            font-weight: 600;
-            padding: 20px 30px;
-            border: 2px solid rgba(0, 255, 204, 0.5);
-            transition: all 0.5s ease;
-            position: relative;
-            overflow: hidden;
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 10px;
-        }
-
-        .social-link::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: radial-gradient(circle, #ff0066, rgba(255, 0, 102, 0.3), transparent);
-            transition: all 0.5s ease;
-            transform: translate(-50%, -50%);
-        }
-
-        .social-link::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transition: left 0.6s ease;
-        }
-
-        .social-link:hover::before {
-            width: 400px;
-            height: 400px;
-        }
-
-        .social-link:hover::after {
-            left: 100%;
-        }
-
-        .social-link:hover {
-            border-color: #ff0066;
-            color: #ffffff;
-            box-shadow: 0 0 30px rgba(255, 0, 102, 0.6);
-            transform: scale(1.15) rotate(5deg) translateY(-5px);
-        }
-
-        /* Service Categories Enhancement */
-        .web-dev-services {
-            background: linear-gradient(135deg, #0a2e4d 0%, #1a4480 50%, #0a2e4d 100%);
-            border-top: 4px solid #ff0066;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .web-dev-services::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="hex" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><polygon points="10,1 19,6 19,14 10,19 1,14 1,6" fill="none" stroke="rgba(0,255,204,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23hex)"/></svg>');
-            animation: hexagonDrift 30s linear infinite;
-        }
-
-        @keyframes hexagonDrift {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(20px, 20px); }
-        }
-
-        .service-categories {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-            margin-top: 60px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .service-category {
-            background: rgba(0, 0, 0, 0.6);
-            border: 2px solid rgba(255, 0, 102, 0.3);
-            border-radius: 20px;
-            padding: 35px;
-            transition: all 0.5s ease;
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-        }
-
-        .service-category::before {
+        .cyber-badge::before {
             content: '';
             position: absolute;
             top: -50%;
             left: -50%;
             width: 200%;
             height: 200%;
-            background: conic-gradient(from 0deg, transparent, rgba(255, 0, 102, 0.1), transparent);
-            animation: serviceSpin 12s linear infinite;
-            opacity: 0;
-            transition: opacity 0.5s ease;
+            background: linear-gradient(to bottom right, transparent, rgba(0, 255, 204, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.3s ease;
         }
 
-        .service-category::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, transparent, rgba(0, 255, 204, 0.05), transparent);
-            opacity: 0;
-            transition: opacity 0.5s ease;
-            border-radius: 20px;
+        .cyber-badge:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px var(--shadow-color);
         }
 
-        .service-category:hover::before {
-            opacity: 1;
+        .cyber-badge:hover::before {
+            animation: shine 1.5s infinite;
         }
 
-        .service-category:hover::after {
-            opacity: 1;
+        @keyframes shine {
+            0% { transform: rotate(45deg) translateX(-100%); }
+            100% { transform: rotate(45deg) translateX(100%); }
         }
 
-        @keyframes serviceSpin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        /* Hacking Terminal */
+        .terminal {
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid var(--accent-cyan);
+            border-radius: 10px;
+            padding: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent-cyan);
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 0 30px var(--shadow-color);
         }
 
-        .service-category:hover {
-            border-color: #00ffcc;
-            box-shadow: 0 15px 40px rgba(255, 0, 102, 0.4);
-            transform: translateY(-8px) rotateY(8deg);
+        .terminal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--accent-cyan);
         }
 
-        .service-category h3 {
-            font-family: 'Orbitron', monospace;
-            color: #ff0066;
-            font-size: 1.8rem;
-            margin-bottom: 25px;
-            text-shadow: 0 0 15px rgba(255, 0, 102, 0.5);
+        .terminal-title {
+            font-weight: 700;
+        }
+
+        .terminal-content {
+            line-height: 1.6;
+        }
+
+        .terminal-prompt {
+            color: var(--accent-purple);
+        }
+
+        /* Skills Radar Chart */
+        .skills-radar {
+            width: 100%;
+            max-width: 600px;
+            height: 400px;
+            margin: 0 auto;
             position: relative;
         }
 
-        .service-category h3::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 0;
-            width: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #ff0066, #00ffcc);
-            transition: width 0.5s ease;
-        }
-
-        .service-category:hover h3::after {
-            width: 100%;
-        }
-
-        .service-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .service-list li {
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(0, 255, 204, 0.2);
-            position: relative;
-            transition: all 0.4s ease;
-            font-size: 1.05rem;
-        }
-
-        .service-list li::before {
-            content: '▶';
-            color: #00ffcc;
-            margin-right: 15px;
-            transition: all 0.4s ease;
-            text-shadow: 0 0 10px #00ffcc;
-        }
-
-        .service-list li::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, #00ffcc, #ff0066);
-            transition: width 0.4s ease;
-        }
-
-        .service-list li:hover {
-            color: #00ffcc;
-            padding-left: 15px;
-            text-shadow: 0 0 15px rgba(0, 255, 204, 0.5);
-        }
-
-        .service-list li:hover::before {
-            color: #ff0066;
-            text-shadow: 0 0 15px #ff0066;
-            transform: scale(1.2);
-        }
-
-        .service-list li:hover::after {
-            width: 100%;
-        }
-
-        /* Enhanced Footer */
+        /* Footer */
         .footer {
-            background: #0f0f23;
-            color: rgba(255, 255, 255, 0.6);
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
             text-align: center;
             padding: 50px 20px;
-            border-top: 1px solid rgba(0, 255, 204, 0.3);
-            position: relative;
+            border-top: 1px solid var(--border-color);
         }
 
-        .footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #00ffcc, #ff0066, #00ffcc, transparent);
-            animation: borderGlow 4s ease-in-out infinite alternate;
+        /* Project Showcase */
+        .project-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
         }
 
-        @keyframes borderGlow {
-            0% { 
-                opacity: 0.5;
-                box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
-            }
-            100% { 
-                opacity: 1;
-                box-shadow: 0 0 20px rgba(0, 255, 204, 0.6);
-            }
+        .project-card {
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.4s ease;
         }
 
-        /* Page Transition Effects */
-        .page-transition {
-            position: fixed;
-            top: 0;
-            left: 0;
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px var(--shadow-color);
+            border-color: var(--accent-red);
+        }
+
+        .project-image {
             width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, #0f0f23, #1a1a2e);
-            z-index: 9999;
+            height: 200px;
+            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-purple));
             display: flex;
             align-items: center;
             justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.4s ease;
+            font-size: 50px;
+            color: white;
         }
 
-        .page-transition.active {
-            opacity: 1;
-            pointer-events: all;
+        .project-content {
+            padding: 25px;
         }
 
-        .transition-text {
+        .project-content h3 {
             font-family: 'Orbitron', monospace;
-            font-size: 42px;
-            color: #00ffcc;
-            text-shadow: 0 0 30px #00ffcc;
-            animation: textPulse 1s ease-in-out infinite alternate;
+            color: var(--accent-cyan);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
         }
 
-        /* Enhanced Particles */
-        .particles {
+        .project-content p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .project-tag {
+            background: rgba(0, 255, 204, 0.1);
+            color: var(--accent-cyan);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 50px auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background: var(--accent-cyan);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+
+        .timeline-content {
+            padding: 20px;
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .timeline-date {
+            font-weight: bold;
+            color: var(--accent-cyan);
+            margin-bottom: 10px;
+            font-family: 'Orbitron', monospace;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: -13px;
+            background: var(--accent-cyan);
+            border: 4px solid var(--bg-primary);
+            top: 20px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .timeline-item:nth-child(even) .timeline-dot {
+            left: -13px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .controls-panel {
+                position: relative;
+                width: 100%;
+                margin: 20px auto;
+            }
+
+            .ai-chat-container {
+                width: calc(100% - 40px);
+                height: 70vh;
+                left: 20px;
+                right: 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .timeline::after {
+                left: 31px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+
+            .timeline-dot {
+                left: 18px !important;
+                right: auto;
+            }
+        }
+
+        /* Clock Styles */
+        .digital-clock {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.2rem;
+            color: var(--accent-cyan);
+            text-shadow: 0 0 10px var(--accent-cyan);
+        }
+
+        /* Enhanced Scrollbar */
+        ::-webkit-scrollbar {
+            width: 14px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+            border-left: 1px solid var(--border-color);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--accent-cyan), var(--accent-red));
+            border-radius: 7px;
+            border: 1px solid var(--border-color);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, var(--accent-red), var(--accent-cyan));
+        }
+
+        /* Hacking Animation */
+        @keyframes hack {
+            0% { transform: translateY(0); }
+            25% { transform: translateY(-5px); }
+            50% { transform: translateY(0); }
+            75% { transform: translateY(5px); }
+            100% { transform: translateY(0); }
+        }
+
+        .hack-animation {
+            animation: hack 0.5s ease infinite;
+        }
+
+        /* Binary Rain Effect */
+        .binary-rain {
             position: absolute;
             top: 0;
             left: 0;
@@ -1612,416 +1389,19 @@
             height: 100%;
             overflow: hidden;
             z-index: 1;
-        }
-
-        .particle {
-            position: absolute;
-            border-radius: 50%;
-            animation: particleFloat 12s linear infinite;
-            opacity: 0.8;
-        }
-
-        .particle.cyan {
-            background: #00ffcc;
-            box-shadow: 0 0 20px #00ffcc;
-        }
-
-        .particle.red {
-            background: #ff0066;
-            box-shadow: 0 0 20px #ff0066;
-        }
-
-        .particle.white {
-            background: #ffffff;
-            box-shadow: 0 0 15px #ffffff;
-        }
-
-        @keyframes particleFloat {
-            0% {
-                transform: translateY(100vh) rotate(0deg) scale(0);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.8;
-                transform: scale(1);
-            }
-            90% {
-                opacity: 0.8;
-            }
-            100% {
-                transform: translateY(-100px) rotate(720deg) scale(0);
-                opacity: 0;
-            }
-        }
-
-        /* Holographic Effect Enhancement */
-        .hologram {
-            position: relative;
-            background: linear-gradient(45deg, transparent 30%, rgba(0, 255, 204, 0.1) 50%, transparent 70%);
-            background-size: 30px 30px;
-            animation: hologramShimmer 4s linear infinite;
-        }
-
-        @keyframes hologramShimmer {
-            0% { 
-                background-position: 0 0;
-                filter: hue-rotate(0deg);
-            }
-            100% { 
-                background-position: 30px 30px;
-                filter: hue-rotate(360deg);
-            }
-        }
-
-        /* Enhanced Data Stream */
-        .data-stream {
-            position: fixed;
-            top: 0;
-            right: 0;
-            width: 250px;
-            height: 100vh;
             pointer-events: none;
-            z-index: 0;
-            overflow: hidden;
         }
 
-        .data-line {
+        .binary-digit {
             position: absolute;
-            right: 0;
-            width: 2px;
-            background: linear-gradient(180deg, transparent, #00ffcc, #ff0066, transparent);
-            animation: dataFlow linear infinite;
-            box-shadow: 0 0 10px currentColor;
-        }
-
-        @keyframes dataFlow {
-            0% {
-                top: -100px;
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                top: 100vh;
-                opacity: 0;
-            }
-        }
-
-        /* Mobile Navigation Enhancement */
-        .mobile-menu-toggle {
-            display: none;
-            background: none;
-            border: 2px solid #00ffcc;
-            color: #00ffcc;
-            padding: 15px 22px;
-            cursor: pointer;
-            font-family: 'Orbitron', monospace;
-            font-size: 20px;
-            transition: all 0.4s ease;
-            border-radius: 8px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .mobile-menu-toggle::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 255, 204, 0.2), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .mobile-menu-toggle:hover::before {
-            left: 100%;
-        }
-
-        .mobile-menu-toggle:hover {
-            background: rgba(0, 255, 204, 0.15);
-            box-shadow: 0 0 25px rgba(0, 255, 204, 0.5);
-            transform: scale(1.1);
-        }
-
-        /* Terminal Cursor Enhancement */
-        .terminal-cursor::after {
-            content: '█';
-            color: #00ffcc;
-            animation: cursorBlink 1.5s infinite;
-            text-shadow: 0 0 10px #00ffcc;
-        }
-
-        @keyframes cursorBlink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0; }
-        }
-
-        /* About Section Enhancement */
-        .about-section {
-            background: linear-gradient(135deg, #16213e 0%, #1a2247 50%, #16213e 100%);
-            border-top: 4px solid #00ffcc;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .about-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(0, 255, 204, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(255, 0, 102, 0.1) 0%, transparent 50%);
-            animation: energyPulse 10s ease-in-out infinite alternate;
-        }
-
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
-            margin-top: 40px;
-        }
-
-        .about-text {
-            font-size: 1.2rem;
-            line-height: 1.7;
-            opacity: 0.9;
-        }
-
-        .about-stats {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-        }
-
-        .stat-item {
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(0, 255, 204, 0.3);
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .stat-item:hover {
-            border-color: #ff0066;
-            box-shadow: 0 5px 20px rgba(255, 0, 102, 0.3);
-        }
-
-        .stat-number {
-            font-family: 'Orbitron', monospace;
-            font-size: 2.5rem;
-            color: #00ffcc;
-            font-weight: 900;
-            text-shadow: 0 0 10px #00ffcc;
-        }
-
-        .stat-label {
-            color: #ffffff;
-            font-size: 1rem;
-            margin-top: 5px;
-            opacity: 0.8;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background: rgba(15, 15, 35, 0.98);
-                flex-direction: column;
-                padding: 30px 20px;
-                gap: 20px;
-                border-top: 1px solid #00ffcc;
-            }
-
-            .nav-links.active {
-                display: flex;
-                animation: mobileMenuSlide 0.3s ease-out;
-            }
-
-            @keyframes mobileMenuSlide {
-                from {
-                    opacity: 0;
-                    transform: translateY(-20px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-
-            .mobile-menu-toggle {
-                display: block;
-            }
-
-            .features-grid, .portfolio-grid, .service-categories {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            .social-links {
-                flex-direction: column;
-                align-items: center;
-                gap: 15px;
-            }
-
-            .hero {
-                padding: 150px 20px 100px;
-            }
-
-            .about-content {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-
-            .about-stats {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Scrollbar Styling */
-        ::-webkit-scrollbar {
-            width: 14px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #0f0f23;
-            border-left: 1px solid rgba(0, 255, 204, 0.3);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(180deg, #00ffcc, #ff0066);
-            border-radius: 7px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(180deg, #ff0066, #00ffcc);
-            box-shadow: 0 0 15px rgba(0, 255, 204, 0.5);
-        }
-
-        /* Advanced Animations */
-        @keyframes neonGlow {
-            from {
-                text-shadow: 
-                    0 0 5px #00ffcc,
-                    0 0 10px #00ffcc,
-                    0 0 20px #00ffcc,
-                    0 0 40px #00ffcc;
-            }
-            to {
-                text-shadow: 
-                    0 0 2px #00ffcc,
-                    0 0 5px #00ffcc,
-                    0 0 10px #00ffcc,
-                    0 0 20px #00ffcc,
-                    0 0 40px #ff0066;
-            }
-        }
-
-        /* Pulse Ring Effect */
-        .pulse-ring {
-            position: absolute;
-            border: 2px solid rgba(0, 255, 204, 0.6);
-            border-radius: 50%;
-            animation: pulseRing 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
-        }
-
-        @keyframes pulseRing {
-            0% {
-                transform: scale(0.33);
-                opacity: 1;
-            }
-            80%, 100% {
-                transform: scale(2.5);
-                opacity: 0;
-            }
-        }
-
-        /* Cyberpunk Button Enhancement */
-        .cyber-button {
-            position: relative;
-            background: transparent;
-            border: none;
-            color: #00ffcc;
-            padding: 15px 30px;
-            font-family: 'Orbitron', monospace;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            overflow: hidden;
-        }
-
-        .cyber-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, #00ffcc, transparent, #ff0066, transparent, #00ffcc);
-            background-size: 400% 400%;
-            opacity: 0.3;
-            animation: gradientFlow 4s ease infinite;
-        }
-
-        .cyber-button::after {
-            content: '';
-            position: absolute;
-            inset: 2px;
-            background: #0f0f23;
-            z-index: -1;
-        }
-
-        @keyframes gradientFlow {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
-        .cyber-button:hover {
-            color: #ffffff;
-            box-shadow: 0 0 30px rgba(0, 255, 204, 0.5);
-            transform: scale(1.05);
-        }
-
-        /* New Effects - Digital Rain Effect */
-        .digital-rain {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            overflow: hidden;
-        }
-
-        .rain-column {
-            position: absolute;
-            top: -100px;
+            color: var(--accent-cyan);
             font-family: 'JetBrains Mono', monospace;
             font-size: 14px;
-            color: #00ffcc;
-            animation: rainFall linear infinite;
-            opacity: 0.4;
-            text-shadow: 0 0 10px currentColor;
+            opacity: 0.7;
+            animation: binaryFall linear infinite;
         }
 
-        @keyframes rainFall {
+        @keyframes binaryFall {
             0% {
                 transform: translateY(-100px);
                 opacity: 0;
@@ -2033,110 +1413,133 @@
                 opacity: 0.6;
             }
             100% {
-                transform: translateY(calc(100vh + 100px));
+                transform: translateY(100vh);
                 opacity: 0;
-            }
-        }
-
-        /* New Effects - Cyber Grid */
-        .cyber-grid {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            background: 
-                linear-gradient(rgba(0, 255, 204, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 255, 204, 0.05) 1px, transparent 1px);
-            background-size: 40px 40px;
-            animation: gridMove 20s linear infinite;
-        }
-
-        @keyframes gridMove {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(40px, 40px); }
-        }
-
-        /* New Effects - Holographic Projection */
-        .holographic-projection {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 300px;
-            height: 300px;
-            background: conic-gradient(from 0deg, #00ffcc, #ff0066, #00ffcc);
-            border-radius: 50%;
-            filter: blur(50px);
-            opacity: 0.1;
-            animation: hologramPulse 5s ease-in-out infinite alternate;
-            z-index: 0;
-        }
-
-        @keyframes hologramPulse {
-            0% {
-                transform: translate(-50%, -50%) scale(1) rotate(0deg);
-                opacity: 0.1;
-            }
-            100% {
-                transform: translate(-50%, -50%) scale(1.5) rotate(180deg);
-                opacity: 0.2;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Advanced Loading System -->
-    <div class="loading-overlay" id="loadingOverlay">
-        <div class="loading-container">
-            <div class="loading-logo">
-                <img src="https://i.imgur.com/HdhmcrS.jpeg" alt="vendetta4c logo">
+    <!-- Terminal Loader -->
+    <div id="terminal-loader">
+        <div class="terminal-header">
+            <div class="terminal-title">SYSTEM BOOT</div>
+            <div class="terminal-controls">
+                <div class="terminal-control close"></div>
+                <div class="terminal-control minimize"></div>
+                <div class="terminal-control maximize"></div>
             </div>
-            <div class="loading-text">VENDETTA4C SYSTEMS</div>
-            <div class="loading-progress">
-                <div class="loading-bar"></div>
-            </div>
-            <div class="loading-status">INITIALIZING QUANTUM PROTOCOLS<span class="terminal-cursor"></span></div>
-            <div class="loading-percentage" id="loadingPercentage">0%</div>
+        </div>
+        <div class="terminal-loader-content">
+            <div class="terminal-line"><span class="terminal-prompt">></span> INITIALIZING VENDETTA4C SYSTEM<span class="terminal-cursor"></span></div>
+            <div class="terminal-line"><span class="terminal-prompt">></span> LOADING CYBERSECURITY MODULES<span class="terminal-cursor"></span></div>
+            <div class="terminal-line"><span class="terminal-prompt">></span> CONNECTING TO MAINFRAME<span class="terminal-cursor"></span></div>
+            <div class="terminal-line"><span class="terminal-prompt">></span> WELCOME TO THE MATRIX<span class="terminal-cursor"></span></div>
         </div>
     </div>
 
-    <!-- Page Transition -->
-    <div class="page-transition" id="pageTransition">
-        <div class="transition-text" id="transitionText">LOADING...</div>
+    <!-- Cyber Effects -->
+    <div class="cyber-grid"></div>
+    <div class="cyber-noise"></div>
+    <div class="hacking-overlay"></div>
+    <div class="matrix-rain" id="matrixRain"></div>
+    <div class="binary-rain" id="binaryRain"></div>
+    <div class="hex-grid" id="hexGrid"></div>
+    <div class="particle-network" id="particleNetwork"></div>
+
+    <!-- Live Market Ticker -->
+    <div class="market-ticker">
+        <div class="ticker-container" id="tickerContainer">
+            <!-- Ticker items will be populated by JavaScript -->
+        </div>
     </div>
 
-    <!-- Matrix Rain Background -->
-    <div class="matrix-rain" id="matrixRain"></div>
-    
-    <!-- Data Stream -->
-    <div class="data-stream" id="dataStream"></div>
+    <!-- Controls Panel -->
+    <div class="controls-panel">
+        <div class="control-group">
+            <h4><i class="fas fa-cog"></i> SYSTEM CONTROLS</h4>
+            <div class="toggle-switch">
+                <label>Matrix Effects</label>
+                <div class="switch active" id="matrixToggle"></div>
+            </div>
+            <div class="toggle-switch">
+                <label>Noise Filter</label>
+                <div class="switch active" id="noiseToggle"></div>
+            </div>
+            <div class="toggle-switch">
+                <label>Cyber Grid</label>
+                <div class="switch active" id="gridToggle"></div>
+            </div>
+            <div class="toggle-switch">
+                <label>Hex Grid</label>
+                <div class="switch active" id="hexToggle"></div>
+            </div>
+            <div class="toggle-switch">
+                <label>Particles</label>
+                <div class="switch active" id="particleToggle"></div>
+            </div>
+        </div>
+        <div class="control-group">
+            <h4><i class="fas fa-clock"></i> SYSTEM TIME</h4>
+            <div class="digital-clock" id="digitalClock">00:00:00</div>
+        </div>
+        <div class="control-group">
+            <h4><i class="fas fa-palette"></i> THEME SELECTION</h4>
+            <div class="theme-selector">
+                <div class="theme-option cyber active" data-theme="cyber"></div>
+                <div class="theme-option matrix" data-theme="matrix"></div>
+                <div class="theme-option terminal" data-theme="terminal"></div>
+                <div class="theme-option dark-red" data-theme="dark-red"></div>
+                <div class="theme-option purple-haze" data-theme="purple-haze"></div>
+                <div class="theme-option sunset" data-theme="sunset"></div>
+            </div>
+        </div>
+    </div>
 
-    <!-- Cyber Grid -->
-    <div class="cyber-grid"></div>
+    <!-- AI Chat Interface -->
+    <div class="ai-chat-container" id="aiChat">
+        <div class="chat-header">
+            <div class="chat-title"><i class="fas fa-robot"></i> VENDETTA AI</div>
+            <button class="chat-close" id="chatClose"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="message ai">
+                Hello! I'm VENDETTA AI, your cybersecurity assistant. How can I help you today?
+            </div>
+        </div>
+        <div class="typing-indicator" id="typingIndicator">
+            <div class="typing-dots">
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            </div>
+        </div>
+        <div class="chat-input-container">
+            <input type="text" class="chat-input" id="chatInput" placeholder="Ask about cybersecurity...">
+            <button class="chat-send" id="chatSend"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
 
-    <!-- Holographic Projection -->
-    <div class="holographic-projection"></div>
-
-    <!-- Digital Rain -->
-    <div class="digital-rain" id="digitalRain"></div>
+    <!-- Floating Action Button -->
+    <button class="fab" id="chatToggle">
+        <i class="fas fa-robot"></i>
+    </button>
 
     <!-- Navigation -->
     <nav class="nav">
         <div class="nav-container">
             <div class="logo-container" onclick="showPage('home')">
                 <img src="https://i.imgur.com/HdhmcrS.jpeg" alt="vendetta4c logo" class="logo-img">
-                <div class="logo">vendetta4c</div>
+                <div class="logo enhanced-glitch" data-text="vendetta4c">vendetta4c</div>
             </div>
-            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
             <ul class="nav-links" id="navLinks">
                 <li><a onclick="showPage('home')" class="nav-link active">Home</a></li>
                 <li><a onclick="showPage('services')" class="nav-link">Services</a></li>
+                <li><a onclick="showPage('skills')" class="nav-link">Skills</a></li>
+                <li><a onclick="showPage('portfolio')" class="nav-link">Operations</a></li>
                 <li><a onclick="showPage('webdev')" class="nav-link">Web Dev</a></li>
-                <li><a onclick="showPage('portfolio')" class="nav-link">Portfolio</a></li>
-                <li><a onclick="showPage('about')" class="nav-link">About</a></li>
+                <li><a onclick="showPage('tech')" class="nav-link">Tech</a></li>
+                <li><a onclick="showPage('about')" class="nav-link">Identity</a></li>
                 <li><a onclick="showPage('contact')" class="nav-link">Contact</a></li>
             </ul>
         </div>
@@ -2146,51 +1549,85 @@
     <div id="home" class="page active">
         <!-- Hero Section -->
         <section class="hero">
-            <div class="hexagon-bg"></div>
-            <div class="particles" id="particles"></div>
-            <div class="scanner-line"></div>
-            <div class="scanner-line"></div>
-            <div class="energy-ring"></div>
-            <div class="energy-ring"></div>
-            <div class="energy-ring"></div>
             <div class="hero-content">
-                <h1 class="glitch" data-text="vendetta4c">vendetta4c</h1>
-                <h2 class="terminal-cursor">Digital Solutions & Web Development Reimagined</h2>
-                <p>Powering your digital presence with precision, speed, and cutting-edge technology.</p>
-                <button class="cta-button hologram" onclick="showPage('services')">Explore Services</button>
-                <button class="cta-button" onclick="showPage('webdev')" style="border-color: #ff0066; color: #ff0066;">View Web Dev</button>
+                <h1 class="enhanced-glitch" data-text="vendetta4c">vendetta4c</h1>
+                <h2>CYBERSECURITY SPECIALIST & DIGITAL SOLUTIONS ARCHITECT</h2>
+                <p>Securing digital frontiers with advanced threat intelligence, penetration testing, and innovative web solutions</p>
+                <button class="cyber-button" onclick="showPage('services')">VIEW SERVICES</button>
+                <button class="cta-button" onclick="showPage('contact')">REQUEST CONSULTATION</button>
             </div>
         </section>
 
-        <!-- Quick Overview -->
-        <section class="section about-section">
-            <div class="section-bg"></div>
-            <h2>🚀 Digital Innovation Hub</h2>
-            <p class="section-description">From high-converting ad campaigns to stunning websites, we deliver comprehensive digital solutions that drive results.</p>
+        <!-- Services Section -->
+        <section class="section">
+            <h2>SECURITY SERVICES</h2>
+            <p class="section-description">Advanced cybersecurity solutions for the modern digital landscape</p>
             
-            <div class="about-content">
-                <div class="about-text">
-                    <p>At vendetta4c, we specialize in creating digital experiences that captivate, convert, and scale. Our expertise spans from precision-targeted advertising campaigns to cutting-edge web development, ensuring your brand stands out in the digital frontier.</p>
-                    <br>
-                    <p>We combine advanced AI algorithms, modern development frameworks, and cyberpunk-inspired design to deliver solutions that are not just functional, but truly extraordinary.</p>
+            <div class="features-grid">
+                <div class="feature-card holographic">
+                    <h3><i class="fas fa-shield-alt"></i> Penetration Testing</h3>
+                    <p>Comprehensive security assessments to identify vulnerabilities in your systems before attackers do.</p>
                 </div>
-                <div class="about-stats">
-                    <div class="stat-item">
-                        <div class="stat-number">500+</div>
-                        <div class="stat-label">Projects Delivered</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">95%</div>
-                        <div class="stat-label">Client Satisfaction</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">24/7</div>
-                        <div class="stat-label">Support Available</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">∞</div>
-                        <div class="stat-label">Creative Possibilities</div>
-                    </div>
+                <div class="feature-card holographic">
+                    <h3><i class="fas fa-lock"></i> Network Security</h3>
+                    <p>Advanced network defense strategies including intrusion detection and prevention systems.</p>
+                </div>
+                <div class="feature-card holographic">
+                    <h3><i class="fas fa-code"></i> Secure Development</h3>
+                    <p>Building security into your applications from the ground up with secure coding practices.</p>
+                </div>
+                <div class="feature-card holographic">
+                    <h3><i class="fas fa-user-secret"></i> Digital Forensics</h3>
+                    <p>Incident response and digital investigation services to identify and mitigate security breaches.</p>
+                </div>
+                <div class="feature-card holographic">
+                    <h3><i class="fas fa-brain"></i> Threat Intelligence</h3>
+                    <p>Proactive monitoring and analysis of emerging cyber threats to keep your systems protected.</p>
+                </div>
+                <div class="feature-card holographic">
+                    <h3><i class="fas fa-mobile-alt"></i> IoT Security</h3>
+                    <p>Securing connected devices and IoT ecosystems against emerging threats and vulnerabilities.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Badges Section -->
+        <section class="section">
+            <h2>SPECIALIZATIONS</h2>
+            <p class="section-description">Areas of expertise and cybersecurity certifications</p>
+            
+            <div class="badges-container">
+                <div class="cyber-badge">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <div class="cyber-badge">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="cyber-badge">
+                    <i class="fas fa-bug"></i>
+                </div>
+                <div class="cyber-badge">
+                    <i class="fas fa-network-wired"></i>
+                </div>
+                <div class="cyber-badge">
+                    <i class="fas fa-database"></i>
+                </div>
+                <div class="cyber-badge">
+                    <i class="fas fa-cloud"></i>
+                </div>
+            </div>
+            
+            <div class="terminal">
+                <div class="terminal-header">
+                    <div class="terminal-title">SECURITY SPECIALIZATIONS</div>
+                </div>
+                <div class="terminal-content">
+                    <p><span class="terminal-prompt">></span> Network Penetration Testing</p>
+                    <p><span class="terminal-prompt">></span> Web Application Security</p>
+                    <p><span class="terminal-prompt">></span> Social Engineering Defense</p>
+                    <p><span class="terminal-prompt">></span> Cryptography & Encryption</p>
+                    <p><span class="terminal-prompt">></span> Incident Response</p>
+                    <p><span class="terminal-prompt">></span> Cloud Security Architecture</p>
                 </div>
             </div>
         </section>
@@ -2199,122 +1636,76 @@
     <!-- SERVICES PAGE -->
     <div id="services" class="page">
         <section class="section" style="padding-top: 120px;">
-            <div class="section-bg"></div>
-            <h2>🎯 Digital Advertising Services</h2>
-            <p class="section-description">Maximize reach and engagement with cutting-edge ad strategies tailored to your audience.</p>
+            <h2>SECURITY SERVICES</h2>
+            <p class="section-description">Comprehensive cybersecurity solutions tailored to your needs</p>
             
             <div class="features-grid">
-                <div class="feature-card hologram">
-                    <h3>Targeted Ad Campaigns</h3>
-                    <p>Precision-targeted campaigns using advanced AI algorithms to reach your ideal audience with laser focus and maximum conversion potential across all digital platforms.</p>
+                <div class="feature-card holographic">
+                    <h3><i class="fas fa-crosshairs"></i> Advanced Penetration Testing</h3>
+                    <p>Simulated cyber attacks to identify vulnerabilities in your systems, networks, and applications before malicious actors can exploit them.</p>
                 </div>
-                <div class="feature-card hologram">
-                    <h3>Social Media Promotion</h3>
-                    <p>Multi-platform social strategies that amplify your brand across Instagram, TikTok, Facebook, LinkedIn with viral potential and organic growth acceleration.</p>
+                <div class="feature-card holographic">
+                    <h3><i class="fas fa-fire"></i> Incident Response</h3>
+                    <p>Rapid response to security breaches with thorough investigation, containment, and recovery procedures to minimize damage.</p>
                 </div>
-                <div class="feature-card hologram">
-                    <h3>Performance Analytics Dashboard</h3>
-                    <p>Real-time insights and metrics that track every click, conversion, and campaign performance with predictive analytics and trend forecasting capabilities.</p>
+                <div class="feature-card holographic">
+                    <h3><i class="fas fa-chart-network"></i> Security Architecture</h3>
+                    <p>Design and implementation of robust security architectures that protect your critical assets and data from evolving threats.</p>
                 </div>
-                <div class="feature-card hologram">
-                    <h3>AI-Driven Ad Optimization</h3>
-                    <p>Machine learning algorithms that continuously optimize your campaigns for maximum ROI, budget efficiency, and audience engagement in real-time.</p>
+                <div class="feature-card holographic">
+                    <h3><i class="fas fa-user-check"></i> Social Engineering Testing</h3>
+                    <p>Simulated phishing and social engineering campaigns to assess employee awareness and strengthen your human firewall.</p>
                 </div>
-                <div class="feature-card hologram">
-                    <h3>Creative Content Generation</h3>
-                    <p>AI-powered content creation for ads, including video scripts, image concepts, and compelling copy that resonates with your target demographic.</p>
+                <div class="feature-card holographic">
+                    <h3><i class="fas fa-cloud"></i> Cloud Security</h3>
+                    <p>Comprehensive security assessments and hardening for cloud environments including AWS, Azure, and Google Cloud Platform.</p>
                 </div>
-                <div class="feature-card hologram">
-                    <h3>Cross-Platform Integration</h3>
-                    <p>Seamless campaign management across Google Ads, Facebook, Instagram, TikTok, LinkedIn, and emerging platforms with unified reporting.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="section">
-            <h2>📁 Smart Document Management</h2>
-            <p class="section-description">Streamline your paperwork with our encrypted, AI-powered document system.</p>
-            
-            <div class="features-grid">
-                <div class="feature-card hologram">
-                    <h3>Secure Cloud Uploads</h3>
-                    <p>Military-grade encryption ensures your documents are protected with enterprise-level security protocols and quantum-resistant encryption standards.</p>
-                </div>
-                <div class="feature-card hologram">
-                    <h3>Automated Form Processing</h3>
-                    <p>AI-powered form recognition and data extraction that eliminates manual entry, reduces errors by 99%, and accelerates processing times dramatically.</p>
-                </div>
-                <div class="feature-card hologram">
-                    <h3>Encrypted Storage</h3>
-                    <p>Zero-knowledge architecture with end-to-end encryption keeps your sensitive data completely private and ensures full compliance with data regulations.</p>
-                </div>
-                <div class="feature-card hologram">
-                    <h3>One-Click Filing & Retrieval</h3>
-                    <p>Instant document access with advanced search, intelligent categorization, and machine learning-powered organization systems for maximum efficiency.</p>
+                <div class="feature-card holographic">
+                    <h3><i class="fas fa-mobile"></i> Mobile Security</h3>
+                    <p>Security testing and hardening for iOS and Android applications to protect against mobile-specific threats.</p>
                 </div>
             </div>
         </section>
     </div>
 
-    <!-- WEB DEVELOPMENT PAGE -->
-    <div id="webdev" class="page">
-        <section class="section web-dev-services" style="padding-top: 120px;">
-            <div class="section-bg"></div>
-            <h2>💻 Web Development Mastery</h2>
-            <p class="section-description">Crafting digital experiences that push the boundaries of what's possible on the web.</p>
+    <!-- SKILLS PAGE -->
+    <div id="skills" class="page">
+        <section class="section" style="padding-top: 120px;">
+            <h2>CYBERSECURITY SKILLS</h2>
+            <p class="section-description">Technical expertise and specialized knowledge in information security</p>
             
-            <div class="service-categories">
-                <div class="service-category">
-                    <h3>Frontend Development</h3>
-                    <ul class="service-list">
-                        <li>React & Next.js Applications</li>
-                        <li>Vue.js & Nuxt.js Projects</li>
-                        <li>Angular Enterprise Solutions</li>
-                        <li>Vanilla JavaScript Mastery</li>
-                        <li>Progressive Web Apps (PWAs)</li>
-                        <li>Interactive 3D Experiences</li>
-                        <li>Advanced CSS Animations</li>
-                        <li>WebGL & Three.js Projects</li>
-                    </ul>
+            <div class="terminal">
+                <div class="terminal-header">
+                    <div class="terminal-title">SKILLS MATRIX</div>
                 </div>
-                <div class="service-category">
-                    <h3>Backend Development</h3>
-                    <ul class="service-list">
-                        <li>Node.js & Express APIs</li>
-                        <li>Python Django & FastAPI</li>
-                        <li>PHP Laravel Solutions</li>
-                        <li>Database Design & Optimization</li>
-                        <li>Microservices Architecture</li>
-                        <li>Cloud Integration (AWS, GCP)</li>
-                        <li>DevOps & CI/CD Pipelines</li>
-                        <li>API Development & Integration</li>
-                    </ul>
+                <div class="terminal-content">
+                    <p><span class="terminal-prompt">></span> Penetration Testing Tools: Metasploit, Burp Suite, Nmap, Wireshark</p>
+                    <p><span class="terminal-prompt">></span> Programming Languages: Python, JavaScript, C++, Go, Ruby</p>
+                    <p><span class="terminal-prompt">></span> Security Frameworks: NIST, ISO 27001, OWASP, MITRE ATT&CK</p>
+                    <p><span class="terminal-prompt">></span> Cloud Security: AWS Security Specialty, Azure Security Engineer</p>
+                    <p><span class="terminal-prompt">></span> Certifications: OSCP, CISSP, CEH, CompTIA Security+</p>
+                    <p><span class="terminal-prompt">></span> Specializations: Reverse Engineering, Cryptanalysis, Malware Analysis</p>
                 </div>
-                <div class="service-category">
-                    <h3>E-Commerce Solutions</h3>
-                    <ul class="service-list">
-                        <li>Shopify Custom Development</li>
-                        <li>WooCommerce Solutions</li>
-                        <li>Custom E-Commerce Platforms</li>
-                        <li>Payment Gateway Integration</li>
-                        <li>Inventory Management Systems</li>
-                        <li>Multi-vendor Marketplaces</li>
-                        <li>Mobile Commerce Apps</li>
-                        <li>Conversion Optimization</li>
-                    </ul>
+            </div>
+            
+            <div class="badges-container" style="margin-top: 50px;">
+                <div class="cyber-badge">
+                    <i class="fab fa-python"></i>
                 </div>
-                <div class="service-category">
-                    <h3>Specialized Services</h3>
-                    <ul class="service-list">
-                        <li>AI/ML Integration</li>
-                        <li>Blockchain Applications</li>
-                        <li>IoT Device Interfaces</li>
-                        <li>Real-time Chat Systems</li>
-                        <li>Data Visualization Dashboards</li>
-                        <li>Cybersecurity Implementation</li>
-                        <li>Performance Optimization</li>
-                        <li>SEO & Technical Audits</li>
-                    </ul>
+                <div class="cyber-badge">
+                    <i class="fas fa-terminal"></i>
+                </div>
+                <div class="cyber-badge">
+                    <i class="fas fa-server"></i>
+                </div>
+                <div class="cyber-badge">
+                    <i class="fas fa-database"></i>
+                </div>
+                <div class="cyber-badge">
+                    <i class="fab fa-aws"></i>
+                </div>
+                <div class="cyber-badge">
+                    <i class="fas fa-key"></i>
                 </div>
             </div>
         </section>
@@ -2323,59 +1714,153 @@
     <!-- PORTFOLIO PAGE -->
     <div id="portfolio" class="page">
         <section class="section" style="padding-top: 120px;">
-            <h2>🎨 Featured Projects</h2>
-            <p class="section-description">Showcasing cutting-edge digital solutions that redefine user experiences.</p>
+            <h2>SECURITY OPERATIONS</h2>
+            <p class="section-description">A showcase of cybersecurity projects and successful operations</p>
             
-            <div class="portfolio-grid">
-                <div class="portfolio-item">
-                    <div class="portfolio-image">🚀 CyberCommerce</div>
-                    <div class="portfolio-content">
-                        <h3>E-Commerce Platform</h3>
-                        <p>Next-generation e-commerce platform with AI-powered recommendations, real-time inventory, and immersive 3D product previews.</p>
-                        <div class="tech-stack">
-                            <span class="tech-tag">React</span>
-                            <span class="tech-tag">Node.js</span>
-                            <span class="tech-tag">Three.js</span>
-                            <span class="tech-tag">MongoDB</span>
+            <div class="features-grid">
+                <div class="feature-card holographic">
+                    <h3><i class="fas fa-building"></i> Financial Sector Audit</h3>
+                    <p>Comprehensive security assessment for a major banking institution, identifying critical vulnerabilities in their online banking platform.</p>
+                </div>
+                <div class="feature-card holographic">
+                    <h3><i class="fas fa-heartbeat"></i> Healthcare Network Defense</h3>
+                    <p>Implemented security infrastructure for a hospital network, protecting patient data and medical devices from potential threats.</p>
+                </div>
+                <div class="feature-card holographic">
+                    <h3><i class="fas fa-shopping-cart"></i> E-Commerce Protection</h3>
+                    <p>Secured payment processing systems for an e-commerce platform, preventing potential data breaches and ensuring PCI compliance.</p>
+                </div>
+                <div class="feature-card holographic">
+                    <h3><i class="fas fa-industry"></i> Industrial Control Systems</h3>
+                    <p>Security assessment for manufacturing infrastructure, identifying vulnerabilities in SCADA systems and industrial networks.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- WEB DEVELOPMENT PAGE -->
+    <div id="webdev" class="page">
+        <section class="section" style="padding-top: 120px;">
+            <h2>WEB DEVELOPMENT</h2>
+            <p class="section-description">Modern, responsive, and secure web solutions</p>
+            
+            <div class="features-grid">
+                <div class="feature-card holographic">
+                    <h3><i class="fas fa-laptop-code"></i> Frontend Development</h3>
+                    <p>Creating responsive, interactive user interfaces with modern frameworks like React, Vue, and Angular.</p>
+                </div>
+                <div class="feature-card holographic">
+                    <h3><i class="fas fa-server"></i> Backend Development</h3>
+                    <p>Building robust server-side applications with Node.js, Python, PHP, and database integration.</p>
+                </div>
+                <div class="feature-card holographic">
+                    <h3><i class="fas fa-mobile"></i> Responsive Design</h3>
+                    <p>Ensuring websites work flawlessly across all devices from desktop to mobile with adaptive layouts.</p>
+                </div>
+                <div class="feature-card holographic">
+                    <h3><i class="fas fa-bolt"></i> Performance Optimization</h3>
+                    <p>Enhancing website speed and efficiency through code optimization, caching, and CDN integration.</p>
+                </div>
+                <div class="feature-card holographic">
+                    <h3><i class="fas fa-shield-alt"></i> Security Hardening</h3>
+                    <p>Implementing security best practices to protect against XSS, CSRF, SQL injection, and other vulnerabilities.</p>
+                </div>
+                <div class="feature-card holographic">
+                    <h3><i class="fas fa-search"></i> SEO Optimization</h3>
+                    <p>Improving search engine visibility through technical SEO, content optimization, and performance enhancements.</p>
+                </div>
+            </div>
+            
+            <div class="terminal" style="margin-top: 50px;">
+                <div class="terminal-header">
+                    <div class="terminal-title">WEB DEVELOPMENT STACK</div>
+                </div>
+                <div class="terminal-content">
+                    <p><span class="terminal-prompt">></span> Frontend: React, Vue, Angular, HTML5, CSS3, JavaScript/TypeScript</p>
+                    <p><span class="terminal-prompt">></span> Backend: Node.js, Express, Python, Django, PHP, Laravel</p>
+                    <p><span class="terminal-prompt">></span> Databases: MongoDB, PostgreSQL, MySQL, Redis</p>
+                    <p><span class="terminal-prompt">></span> DevOps: Docker, Kubernetes, AWS, Azure, GitHub Actions</p>
+                    <p><span class="terminal-prompt">></span> Tools: Webpack, Babel, ESLint, Prettier, Git</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- TECH PAGE -->
+    <div id="tech" class="page">
+        <section class="section" style="padding-top: 120px;">
+            <h2>TECHNOLOGY SOLUTIONS</h2>
+            <p class="section-description">Comprehensive IT and technology services</p>
+            
+            <div class="features-grid">
+                <div class="feature-card holographic">
+                    <h3><i class="fas fa-network-wired"></i> Network Infrastructure</h3>
+                    <p>Design, implementation, and maintenance of secure and scalable network architectures.</p>
+                </div>
+                <div class="feature-card holographic">
+                    <h3><i class="fas fa-database"></i> Database Management</h3>
+                    <p>Database design, optimization, and administration for performance and security.</p>
+                </div>
+                <div class="feature-card holographic">
+                    <h3><i class="fas fa-cloud"></i> Cloud Solutions</h3>
+                    <p>Migration, deployment, and management of cloud infrastructure on AWS, Azure, and GCP.</p>
+                </div>
+                <div class="feature-card holographic">
+                    <h3><i class="fas fa-sync-alt"></i> DevOps & Automation</h3>
+                    <p>CI/CD pipeline implementation, infrastructure as code, and deployment automation.</p>
+                </div>
+                <div class="feature-card holographic">
+                    <h3><i class="fas fa-robot"></i> AI & Machine Learning</h3>
+                    <p>Developing intelligent solutions with machine learning models and AI integration.</p>
+                </div>
+                <div class="feature-card holographic">
+                    <h3><i class="fas fa-server"></i> Server Administration</h3>
+                    <p>Linux/Windows server setup, configuration, maintenance, and troubleshooting.</p>
+                </div>
+            </div>
+            
+            <div class="project-showcase" style="margin-top: 50px;">
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Cloud Migration Project</h3>
+                        <p>Migrated enterprise infrastructure from on-premise to AWS, reducing costs by 40% and improving scalability.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">AWS</span>
+                            <span class="project-tag">Terraform</span>
+                            <span class="project-tag">Docker</span>
                         </div>
                     </div>
                 </div>
-                <div class="portfolio-item">
-                    <div class="portfolio-image">📊 DataViz Pro</div>
-                    <div class="portfolio-content">
-                        <h3>Analytics Dashboard</h3>
-                        <p>Real-time data visualization platform with interactive charts, predictive analytics, and customizable reporting for enterprise clients.</p>
-                        <div class="tech-stack">
-                            <span class="tech-tag">Vue.js</span>
-                            <span class="tech-tag">D3.js</span>
-                            <span class="tech-tag">Firebase</span>
-                            <span class="tech-tag">Chart.js</span>
+                
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Data Analytics Platform</h3>
+                        <p>Built a real-time data processing and visualization platform for business intelligence.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Python</span>
+                            <span class="project-tag">Kafka</span>
+                            <span class="project-tag">React</span>
                         </div>
                     </div>
                 </div>
-                <div class="portfolio-item">
-                    <div class="portfolio-image">🤖 AI Assistant</div>
-                    <div class="portfolio-content">
-                        <h3>Intelligent Chat System</h3>
-                        <p>Advanced AI chatbot with natural language processing, sentiment analysis, and seamless integration with business systems.</p>
-                        <div class="tech-stack">
-                            <span class="tech-tag">Python</span>
-                            <span class="tech-tag">TensorFlow</span>
-                            <span class="tech-tag">WebSockets</span>
-                            <span class="tech-tag">Redis</span>
-                        </div>
+                
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-mobile-alt"></i>
                     </div>
-                </div>
-                <div class="portfolio-item">
-                    <div class="portfolio-image">🔐 SecureVault</div>
-                    <div class="portfolio-content">
-                        <h3>Encrypted Storage System</h3>
-                        <p>Military-grade encrypted file storage with zero-knowledge architecture and blockchain-based verification.</p>
-                        <div class="tech-stack">
-                            <span class="tech-tag">Blockchain</span>
-                            <span class="tech-tag">AES-256</span>
-                            <span class="tech-tag">React Native</span>
-                            <span class="tech-tag">IPFS</span>
+                    <div class="project-content">
+                        <h3>Mobile App Development</h3>
+                        <p>Created a cross-platform mobile application with React Native for iOS and Android.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">React Native</span>
+                            <span class="project-tag">Firebase</span>
+                            <span class="project-tag">Redux</span>
                         </div>
                     </div>
                 </div>
@@ -2385,35 +1870,58 @@
 
     <!-- ABOUT PAGE -->
     <div id="about" class="page">
-        <section class="section about-section" style="padding-top: 120px;">
-            <div class="section-bg"></div>
-            <h2>👁️ About vendetta4c</h2>
-            <p class="section-description">We are a collective of digital artisans, cyber architects, and data alchemists pushing the boundaries of what's possible.</p>
+        <section class="section" style="padding-top: 120px;">
+            <h2>IDENTITY</h2>
+            <p class="section-description">The mind behind the cybersecurity expertise</p>
             
-            <div class="about-content">
-                <div class="about-text">
-                    <p>Founded in the digital frontier, vendetta4c emerged from a vision to bridge the gap between cutting-edge technology and stunning visual design. We believe that digital experiences should not only function flawlessly but also captivate and inspire.</p>
-                    <br>
-                    <p>Our team combines expertise in AI algorithms, cybersecurity, immersive web experiences, and data-driven marketing to create solutions that stand out in the crowded digital landscape.</p>
-                    <br>
-                    <p>We operate at the intersection of art and technology, where every pixel matters and every line of code serves a purpose. Our cyberpunk-inspired aesthetic isn't just a style—it's a philosophy that embraces the future while honoring the digital pioneers who came before us.</p>
+            <div class="terminal">
+                <div class="terminal-header">
+                    <div class="terminal-title">VENDETTA4C PROFILE</div>
                 </div>
-                <div class="about-stats">
-                    <div class="stat-item">
-                        <div class="stat-number">2018</div>
-                        <div class="stat-label">Year Established</div>
+                <div class="terminal-content">
+                    <p><span class="terminal-prompt">></span> NAME: **************</p>
+                    <p><span class="terminal-prompt">></span> LOCATION: Monaco</p>
+                    <p><span class="terminal-prompt">></span> SPECIALIZATION: Cybersecurity & Ethical Hacking</p>
+                    <p><span class="terminal-prompt">></span> EXPERIENCE: 8+ Years in Information Security</p>
+                    <p><span class="terminal-prompt">></span> METHODOLOGY: Offensive Security & Threat Intelligence</p>
+                    <p><span class="terminal-prompt">></span> PHILOSOPHY: "To protect, one must first understand how to attack."</p>
+                </div>
+            </div>
+            
+            <div class="timeline" style="margin-top: 50px;">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">2015 - 2017</div>
+                        <h3>Security Analyst</h3>
+                        <p>Started career as a security analyst, focusing on network monitoring and threat detection.</p>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-number">15+</div>
-                        <div class="stat-label">Team Members</div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">2017 - 2019</div>
+                        <h3>Penetration Tester</h3>
+                        <p>Conducted security assessments and penetration tests for various organizations.</p>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-number">∞</div>
-                        <div class="stat-label">Caffeine Consumed</div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">2019 - 2021</div>
+                        <h3>Security Consultant</h3>
+                        <p>Provided cybersecurity consulting services to businesses across multiple industries.</p>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-number">100%</div>
-                        <div class="stat-label">Cyberpunk Ethos</div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">2021 - Present</div>
+                        <h3>Cybersecurity Specialist</h3>
+                        <p>Focusing on advanced threat intelligence, digital forensics, and security architecture.</p>
                     </div>
                 </div>
             </div>
@@ -2422,314 +1930,503 @@
 
     <!-- CONTACT PAGE -->
     <div id="contact" class="page">
-        <section class="section contact" style="padding-top: 120px;">
-            <div class="contact-content">
-                <h2>📡 Connect With Us</h2>
-                <p class="section-description">Ready to elevate your digital presence? Let's initiate the connection protocol.</p>
-                
-                <a href="mailto:dettatron445@gmail.com" class="contact-email">dettatron445@gmail.com</a>
-                
-                <div class="social-links">
-                    <a href="#" class="social-link">GitHub</a>
-                    <a href="#" class="social-link">LinkedIn</a>
-                    <a href="#" class="social-link">Twitter</a>
-                    <a href="#" class="social-link">Instagram</a>
-                    <a href="#" class="social-link">Discord</a>
+        <section class="section" style="padding-top: 120px;">
+            <h2>ENCRYPTED COMMUNICATION</h2>
+            <p class="section-description">Secure channels for discussing your cybersecurity needs</p>
+            
+            <div class="terminal">
+                <div class="terminal-header">
+                    <div class="terminal-title">CONTACT PROTOCOLS</div>
                 </div>
+                <div class="terminal-content">
+                    <p><span class="terminal-prompt">></span> EMAIL: dettatron445@gmail.com</p>
+                    <p><span class="terminal-prompt">></span> WHATSAPP: +233570736544</p>
+                    <p><span class="terminal-prompt">></span> SIGNAL: Available upon request</p>
+                    <p><span class="terminal-prompt">></span> PGP: Key available for encrypted communications</p>
+                    <p><span class="terminal-prompt">></span> RESPONSE TIME: Within 24 hours for secure inquiries</p>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 50px;">
+                <button class="cyber-button" onclick="location.href='mailto:dettatron445@gmail.com'">SEND ENCRYPTED EMAIL</button>
+                <button class="cta-button" onclick="location.href='https://wa.me/233570736544'">CONTACT ON WHATSAPP</button>
             </div>
         </section>
     </div>
 
-    <!-- FOOTER -->
+    <!-- Footer -->
     <footer class="footer">
-        <p>© 2023 vendetta4c | Digital Solutions & Web Development</p>
-        <p>Designed with 💙 and ☕ in the digital frontier</p>
+        <p>&copy; 2023 vendetta4c. All rights reserved. | Cybersecurity & Digital Protection</p>
+        <p>Monaco | Secure Connections Only</p>
     </footer>
 
     <script>
-        // DOM Elements
-        const loadingOverlay = document.getElementById('loadingOverlay');
-        const loadingPercentage = document.getElementById('loadingPercentage');
-        const pageTransition = document.getElementById('pageTransition');
-        const transitionText = document.getElementById('transitionText');
-        const matrixRain = document.getElementById('matrixRain');
-        const dataStream = document.getElementById('dataStream');
-        const digitalRain = document.getElementById('digitalRain');
-        const particlesContainer = document.getElementById('particles');
-        const navLinks = document.getElementById('navLinks');
-        const pages = document.querySelectorAll('.page');
-        const navItems = document.querySelectorAll('.nav-link');
-
-        // Configuration
-        const config = {
-            matrixRain: {
-                columns: 50,
-                characters: '01',
-                speed: 100
-            },
-            dataStream: {
-                lines: 5,
-                speed: 3000
-            },
-            digitalRain: {
-                columns: 30,
-                characters: '01010101',
-                speed: 80
-            },
-            particles: {
-                count: 30,
-                types: ['cyan', 'red', 'white']
-            }
-        };
-
-        // Initialize loading sequence
-        function initLoading() {
-            let progress = 0;
-            const interval = setInterval(() => {
-                progress += Math.random() * 5;
-                if (progress >= 100) {
-                    progress = 100;
-                    clearInterval(interval);
-                    loadingPercentage.textContent = `${progress}%`;
-                    
-                    // Complete loading after a short delay
-                    setTimeout(completeLoading, 500);
-                } else {
-                    loadingPercentage.textContent = `${Math.floor(progress)}%`;
-                }
-            }, 100);
-        }
-
-        // Complete loading and show content
-        function completeLoading() {
-            loadingOverlay.style.opacity = '0';
+        // Initialize terminal loader
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simulate system boot
             setTimeout(() => {
-                loadingOverlay.style.display = 'none';
-                initEffects();
-                initScrollAnimations();
-            }, 800);
-        }
+                document.getElementById('terminal-loader').style.display = 'none';
+                initializeSystem();
+            }, 5000);
+        });
 
-        // Initialize all visual effects
-        function initEffects() {
+        function initializeSystem() {
             createMatrixRain();
-            createDataStream();
-            createDigitalRain();
-            createParticles();
-            initClickEffects();
+            createBinaryRain();
+            createHexGrid();
+            createParticleNetwork();
+            updateClock();
+            setInterval(updateClock, 1000);
+            setupAIChat();
+            setupThemeToggle();
+            setupTicker();
+            
+            // Auto-rotate features
+            setInterval(() => {
+                highlightRandomFeature();
+            }, 3000);
         }
 
-        // Create matrix rain effect
+        // Matrix Rain Effect
         function createMatrixRain() {
-            for (let i = 0; i < config.matrixRain.columns; i++) {
+            const matrixRain = document.getElementById('matrixRain');
+            const characters = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+            const fontSize = 14;
+            const columns = Math.floor(window.innerWidth / fontSize);
+            
+            for (let i = 0; i < columns; i++) {
                 const column = document.createElement('div');
                 column.classList.add('matrix-column');
+                column.style.left = (i * fontSize) + 'px';
+                column.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                column.style.animationDelay = (Math.random() * 2) + 's';
                 
-                // Randomize column properties
-                const left = Math.random() * 100;
-                const delay = Math.random() * 10;
-                const duration = 5 + Math.random() * 10;
-                const characters = config.matrixRain.characters;
-                
-                column.style.left = `${left}%`;
-                column.style.animationDelay = `${delay}s`;
-                column.style.animationDuration = `${duration}s`;
-                
-                // Add random characters
+                // Create initial characters
                 let content = '';
-                for (let j = 0; j < 30; j++) {
-                    content += characters.charAt(Math.floor(Math.random() * characters.length)) + '<br>';
-                }
-                column.innerHTML = content;
-                
-                // Randomly assign color class
-                if (Math.random() > 0.8) {
-                    column.classList.add('red');
-                } else if (Math.random() > 0.9) {
-                    column.classList.add('white');
+                const length = Math.floor(Math.random() * 20) + 10;
+                for (let j = 0; j < length; j++) {
+                    content += characters.charAt(Math.floor(Math.random() * characters.length));
                 }
                 
+                column.textContent = content;
                 matrixRain.appendChild(column);
             }
         }
 
-        // Create data stream effect
-        function createDataStream() {
-            for (let i = 0; i < config.dataStream.lines; i++) {
-                const line = document.createElement('div');
-                line.classList.add('data-line');
-                
-                const delay = Math.random() * config.dataStream.speed;
-                const duration = 2000 + Math.random() * 3000;
-                const height = 50 + Math.random() * 200;
-                
-                line.style.left = `${Math.random() * 100}%`;
-                line.style.animationDelay = `${delay}ms`;
-                line.style.animationDuration = `${duration}ms`;
-                line.style.height = `${height}px`;
-                
-                dataStream.appendChild(line);
-                
-                // Continuously create new lines
-                setInterval(() => {
-                    if (dataStream.children.length < config.dataStream.lines * 2) {
-                        createDataStream();
-                    }
-                }, config.dataStream.speed);
+        // Binary Rain Effect
+        function createBinaryRain() {
+            const binaryRain = document.getElementById('binaryRain');
+            const binaryChars = '01';
+            const digitCount = 100;
+            
+            for (let i = 0; i < digitCount; i++) {
+                const digit = document.createElement('div');
+                digit.classList.add('binary-digit');
+                digit.textContent = Math.random() > 0.5 ? '1' : '0';
+                digit.style.left = Math.random() * 100 + 'vw';
+                digit.style.animationDuration = (Math.random() * 5 + 3) + 's';
+                digit.style.animationDelay = (Math.random() * 2) + 's';
+                digit.style.opacity = Math.random() * 0.5 + 0.3;
+                binaryRain.appendChild(digit);
             }
         }
 
-        // Create digital rain effect
-        function createDigitalRain() {
-            for (let i = 0; i < config.digitalRain.columns; i++) {
-                const column = document.createElement('div');
-                column.classList.add('rain-column');
-                
-                const left = Math.random() * 100;
-                const delay = Math.random() * 10;
-                const duration = 3 + Math.random() * 7;
-                const characters = config.digitalRain.characters;
-                
-                column.style.left = `${left}%`;
-                column.style.animationDelay = `${delay}s`;
-                column.style.animationDuration = `${duration}s`;
-                
-                // Add random characters
-                let content = '';
-                for (let j = 0; j < 20; j++) {
-                    content += characters.charAt(Math.floor(Math.random() * characters.length)) + '<br>';
+        // Hex Grid Effect
+        function createHexGrid() {
+            const hexGrid = document.getElementById('hexGrid');
+            const hexSize = 100;
+            const rows = Math.ceil(window.innerHeight / (hexSize * 0.866)) + 1;
+            const cols = Math.ceil(window.innerWidth / (hexSize * 1.5)) + 1;
+            
+            for (let row = 0; row < rows; row++) {
+                for (let col = 0; col < cols; col++) {
+                    const hex = document.createElement('div');
+                    hex.classList.add('hex');
+                    
+                    // Calculate position with offset for even rows
+                    const offset = row % 2 === 0 ? 0 : hexSize * 0.75;
+                    hex.style.left = `${col * hexSize * 1.5 + offset}px`;
+                    hex.style.top = `${row * hexSize * 0.866}px`;
+                    hex.style.animationDelay = `${(row + col) * 0.1}s`;
+                    
+                    hexGrid.appendChild(hex);
                 }
-                column.innerHTML = content;
-                
-                digitalRain.appendChild(column);
             }
         }
 
-        // Create floating particles
-        function createParticles() {
-            for (let i = 0; i < config.particles.count; i++) {
+        // Particle Network Effect
+        function createParticleNetwork() {
+            const particleNetwork = document.getElementById('particleNetwork');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.classList.add('particle');
                 
-                // Randomize particle properties
-                const type = config.particles.types[Math.floor(Math.random() * config.particles.types.length)];
-                const size = 2 + Math.random() * 8;
-                const left = Math.random() * 100;
-                const delay = Math.random() * 10;
-                const duration = 5 + Math.random() * 10;
+                // Random position
+                particle.style.left = `${Math.random() * 100}vw`;
+                particle.style.top = `${Math.random() * 100}vh`;
                 
-                particle.classList.add(type);
+                // Random size
+                const size = Math.random() * 3 + 1;
                 particle.style.width = `${size}px`;
                 particle.style.height = `${size}px`;
-                particle.style.left = `${left}%`;
-                particle.style.animationDelay = `${delay}s`;
-                particle.style.animationDuration = `${duration}s`;
                 
-                particlesContainer.appendChild(particle);
+                // Random animation duration
+                particle.style.animationDuration = `${Math.random() * 10 + 10}s`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                
+                particleNetwork.appendChild(particle);
             }
         }
 
-        // Initialize click effects
-        function initClickEffects() {
-            document.addEventListener('click', function(e) {
-                createClickEffect(e.clientX, e.clientY);
+        // Update Clock
+        function updateClock() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('en-US', { hour12: false });
+            const dateStr = now.toLocaleDateString('en-US', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            
+            document.getElementById('digitalClock').innerHTML = `${timeStr}<br><span style="font-size: 0.8em;">${dateStr}</span>`;
+        }
+
+        // Setup Market Ticker
+        function setupTicker() {
+            const tickerData = [
+                { symbol: "BTC", price: 51423.78, change: 2.35 },
+                { symbol: "ETH", price: 2987.32, change: 1.87 },
+                { symbol: "TSLA", price: 815.12, change: -0.72 },
+                { symbol: "AAPL", price: 172.45, change: 0.63 },
+                { symbol: "MSFT", price: 328.79, change: 1.24 },
+                { symbol: "AMZN", price: 135.67, change: -0.45 },
+                { symbol: "NVDA", price: 878.36, change: 3.57 },
+                { symbol: "SPY", price: 498.23, change: 0.89 },
+                { symbol: "SOL", price: 126.54, change: 5.32 },
+                { symbol: "DOGE", price: 0.1576, change: -2.14 }
+            ];
+            
+            const tickerContainer = document.getElementById('tickerContainer');
+            
+            tickerData.forEach(item => {
+                const tickerItem = document.createElement('div');
+                tickerItem.classList.add('ticker-item');
+                
+                const symbol = document.createElement('span');
+                symbol.classList.add('ticker-symbol');
+                symbol.textContent = item.symbol;
+                
+                const price = document.createElement('span');
+                price.classList.add('ticker-price');
+                price.textContent = `$${item.price.toLocaleString()}`;
+                
+                const change = document.createElement('span');
+                change.classList.add('ticker-change');
+                change.classList.add(item.change >= 0 ? 'positive' : 'negative');
+                change.textContent = `${item.change >= 0 ? '+' : ''}${item.change.toFixed(2)}%`;
+                
+                tickerItem.appendChild(symbol);
+                tickerItem.appendChild(price);
+                tickerItem.appendChild(change);
+                
+                tickerContainer.appendChild(tickerItem);
             });
         }
 
-        // Create click effect at specified coordinates
-        function createClickEffect(x, y) {
-            const effect = document.createElement('div');
-            effect.classList.add('click-effect');
+        // Random feature highlight
+        function highlightRandomFeature() {
+            const features = document.querySelectorAll('.feature-card');
+            features.forEach(feature => feature.classList.remove('hack-animation'));
             
-            // Randomly choose effect color
-            if (Math.random() > 0.5) {
-                effect.classList.add('red');
-            } else {
-                effect.classList.add('cyan');
-            }
+            const randomFeature = features[Math.floor(Math.random() * features.length)];
+            randomFeature.classList.add('hack-animation');
             
-            effect.style.left = `${x - 40}px`;
-            effect.style.top = `${y - 40}px`;
-            
-            document.body.appendChild(effect);
-            
-            // Remove effect after animation completes
             setTimeout(() => {
-                effect.remove();
-            }, 800);
+                randomFeature.classList.remove('hack-animation');
+            }, 1000);
         }
 
-        // Initialize scroll animations
-        function initScrollAnimations() {
-            const sections = document.querySelectorAll('.section');
+        // AI Chat Functionality
+        function setupAIChat() {
+            const chatToggle = document.getElementById('chatToggle');
+            const aiChat = document.getElementById('aiChat');
+            const chatClose = document.getElementById('chatClose');
+            const chatInput = document.getElementById('chatInput');
+            const chatSend = document.getElementById('chatSend');
+            const chatMessages = document.getElementById('chatMessages');
+            const typingIndicator = document.getElementById('typingIndicator');
             
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
+            chatToggle.addEventListener('click', () => {
+                aiChat.classList.toggle('active');
+            });
+            
+            chatClose.addEventListener('click', () => {
+                aiChat.classList.remove('active');
+            });
+            
+            function addMessage(text, isUser = false) {
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('message');
+                messageDiv.classList.add(isUser ? 'user' : 'ai');
+                messageDiv.textContent = text;
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            function simulateTyping() {
+                typingIndicator.style.display = 'block';
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                
+                return new Promise(resolve => {
+                    setTimeout(() => {
+                        typingIndicator.style.display = 'none';
+                        resolve();
+                    }, 1500);
                 });
-            }, { threshold: 0.1 });
+            }
             
-            sections.forEach(section => {
-                observer.observe(section);
+            function getAIResponse(userMessage) {
+                const responses = [
+                    "I'm VENDETTA AI, designed to assist with cybersecurity and digital protection queries.",
+                    "For optimal security, consider implementing multi-factor authentication and regular security audits.",
+                    "Our team specializes in penetration testing and vulnerability assessments for various systems.",
+                    "Looking to improve your security posture? Focus on employee training and incident response planning.",
+                    "We can help you develop a comprehensive cybersecurity strategy for your organization.",
+                    "Zero Trust architecture is becoming essential in modern security frameworks.",
+                    "Remember: The weakest link in security is often human factors, not technology.",
+                    "Let me know if you need specific information about our security services or consultations."
+                ];
+                
+                // Special responses for security-related queries
+                if (userMessage.toLowerCase().includes('hack') || userMessage.toLowerCase().includes('penetration')) {
+                    return "We offer comprehensive penetration testing services to identify vulnerabilities before attackers do.";
+                }
+                
+                if (userMessage.toLowerCase().includes('security') || userMessage.toLowerCase().includes('protect')) {
+                    return "Our security assessments include network, application, and social engineering testing.";
+                }
+                
+                if (userMessage.toLowerCase().includes('data') || userMessage.toLowerCase().includes('breach')) {
+                    return "We provide incident response services to help contain and recover from security breaches.";
+                }
+                
+                if (userMessage.toLowerCase().includes('vendetta')) {
+                    return "VENDETTA represents our commitment to relentless pursuit of cybersecurity excellence.";
+                }
+                
+                if (userMessage.toLowerCase().includes('web') || userMessage.toLowerCase().includes('development')) {
+                    return "We create secure, responsive, and high-performance websites and web applications.";
+                }
+                
+                if (userMessage.toLowerCase().includes('tech') || userMessage.toLowerCase().includes('solution')) {
+                    return "Our technology solutions include cloud infrastructure, network setup, and IT consulting.";
+                }
+                
+                return responses[Math.floor(Math.random() * responses.length)];
+            }
+            
+            async function sendMessage() {
+                const message = chatInput.value.trim();
+                if (!message) return;
+                
+                addMessage(message, true);
+                chatInput.value = '';
+                
+                await simulateTyping();
+                
+                const response = getAIResponse(message);
+                addMessage(response);
+            }
+            
+            chatSend.addEventListener('click', sendMessage);
+            
+            chatInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
             });
         }
 
-        // Show specific page with transition
+        // Page Navigation
         function showPage(pageId) {
-            // Set transition text based on page
-            transitionText.textContent = pageId.toUpperCase();
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
             
-            // Show transition overlay
-            pageTransition.classList.add('active');
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
             
-            // Hide mobile menu if open
-            navLinks.classList.remove('active');
+            // Update active nav link
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
             
-            setTimeout(() => {
-                // Hide all pages
-                pages.forEach(page => {
-                    page.classList.remove('active');
-                });
-                
-                // Update active nav link
-                navItems.forEach(item => {
-                    item.classList.remove('active');
-                    if (item.textContent.toLowerCase() === pageId) {
-                        item.classList.add('active');
-                    }
-                });
-                
-                // Show target page
-                document.getElementById(pageId).classList.add('active');
-                
-                // Scroll to top
-                window.scrollTo(0, 0);
-                
-                // Hide transition overlay
-                setTimeout(() => {
-                    pageTransition.classList.remove('active');
-                }, 500);
-            }, 800);
+            document.querySelector(`a[onclick="showPage('${pageId}')"]`).classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
         }
 
-        // Toggle mobile menu
-        function toggleMobileMenu() {
-            navLinks.classList.toggle('active');
+        // Theme Toggle
+        function setupThemeToggle() {
+            const matrixToggle = document.getElementById('matrixToggle');
+            const noiseToggle = document.getElementById('noiseToggle');
+            const gridToggle = document.getElementById('gridToggle');
+            const hexToggle = document.getElementById('hexToggle');
+            const particleToggle = document.getElementById('particleToggle');
+            const themeOptions = document.querySelectorAll('.theme-option');
+            
+            matrixToggle.addEventListener('click', () => {
+                matrixToggle.classList.toggle('active');
+                const matrixRain = document.getElementById('matrixRain');
+                if (matrixToggle.classList.contains('active')) {
+                    matrixRain.style.display = 'block';
+                } else {
+                    matrixRain.style.display = 'none';
+                }
+            });
+            
+            noiseToggle.addEventListener('click', () => {
+                noiseToggle.classList.toggle('active');
+                const cyberNoise = document.querySelector('.cyber-noise');
+                if (noiseToggle.classList.contains('active')) {
+                    cyberNoise.style.display = 'block';
+                } else {
+                    cyberNoise.style.display = 'none';
+                }
+            });
+            
+            gridToggle.addEventListener('click', () => {
+                gridToggle.classList.toggle('active');
+                const cyberGrid = document.querySelector('.cyber-grid');
+                if (gridToggle.classList.contains('active')) {
+                    cyberGrid.style.display = 'block';
+                } else {
+                    cyberGrid.style.display = 'none';
+                }
+            });
+            
+            hexToggle.addEventListener('click', () => {
+                hexToggle.classList.toggle('active');
+                const hexGrid = document.getElementById('hexGrid');
+                if (hexToggle.classList.contains('active')) {
+                    hexGrid.style.display = 'block';
+                } else {
+                    hexGrid.style.display = 'none';
+                }
+            });
+            
+            particleToggle.addEventListener('click', () => {
+                particleToggle.classList.toggle('active');
+                const particleNetwork = document.getElementById('particleNetwork');
+                if (particleToggle.classList.contains('active')) {
+                    particleNetwork.style.display = 'block';
+                } else {
+                    particleNetwork.style.display = 'none';
+                }
+            });
+            
+            // Theme selection
+            themeOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    // Remove active class from all options
+                    themeOptions.forEach(opt => opt.classList.remove('active'));
+                    // Add active class to clicked option
+                    option.classList.add('active');
+                    
+                    // Change theme based on selection
+                    changeTheme(option.dataset.theme);
+                });
+            });
         }
 
-        // Start everything when the page loads
-        window.addEventListener('load', () => {
-            initLoading();
-        });
-
-        // Add keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && navLinks.classList.contains('active')) {
-                navLinks.classList.remove('active');
+        // Theme changer function
+        function changeTheme(themeName) {
+            const root = document.documentElement;
+            
+            switch(themeName) {
+                case 'matrix':
+                    root.style.setProperty('--bg-primary', '#000000');
+                    root.style.setProperty('--bg-secondary', '#001100');
+                    root.style.setProperty('--text-primary', '#00ff00');
+                    root.style.setProperty('--text-secondary', '#00aa00');
+                    root.style.setProperty('--accent-cyan', '#00ff00');
+                    root.style.setProperty('--accent-red', '#ff0066');
+                    root.style.setProperty('--accent-purple', '#00ff88');
+                    root.style.setProperty('--accent-yellow', '#ffff00');
+                    root.style.setProperty('--border-color', 'rgba(0, 255, 0, 0.3)');
+                    root.style.setProperty('--shadow-color', 'rgba(0, 255, 0, 0.2)');
+                    break;
+                    
+                case 'terminal':
+                    root.style.setProperty('--bg-primary', '#1a1a1a');
+                    root.style.setProperty('--bg-secondary', '#252525');
+                    root.style.setProperty('--text-primary', '#ffffff');
+                    root.style.setProperty('--text-secondary', '#cccccc');
+                    root.style.setProperty('--accent-cyan', '#ffffff');
+                    root.style.setProperty('--accent-red', '#ff5555');
+                    root.style.setProperty('--accent-purple', '#aa00ff');
+                    root.style.setProperty('--accent-yellow', '#ffff00');
+                    root.style.setProperty('--border-color', 'rgba(255, 255, 255, 0.3)');
+                    root.style.setProperty('--shadow-color', 'rgba(255, 255, 255, 0.2)');
+                    break;
+                    
+                case 'dark-red':
+                    root.style.setProperty('--bg-primary', '#120000');
+                    root.style.setProperty('--bg-secondary', '#1a0000');
+                    root.style.setProperty('--text-primary', '#ffffff');
+                    root.style.setProperty('--text-secondary', '#ccaaaa');
+                    root.style.setProperty('--accent-cyan', '#ff0066');
+                    root.style.setProperty('--accent-red', '#ff0000');
+                    root.style.setProperty('--accent-purple', '#cc0066');
+                    root.style.setProperty('--accent-yellow', '#ffcc00');
+                    root.style.setProperty('--border-color', 'rgba(255, 0, 102, 0.3)');
+                    root.style.setProperty('--shadow-color', 'rgba(255, 0, 102, 0.2)');
+                    break;
+                    
+                case 'purple-haze':
+                    root.style.setProperty('--bg-primary', '#0a0012');
+                    root.style.setProperty('--bg-secondary', '#14001f');
+                    root.style.setProperty('--text-primary', '#ffffff');
+                    root.style.setProperty('--text-secondary', '#ccaaee');
+                    root.style.setProperty('--accent-cyan', '#bd00ff');
+                    root.style.setProperty('--accent-red', '#ff0066');
+                    root.style.setProperty('--accent-purple', '#aa00ff');
+                    root.style.setProperty('--accent-yellow', '#ffcc00');
+                    root.style.setProperty('--border-color', 'rgba(189, 0, 255, 0.3)');
+                    root.style.setProperty('--shadow-color', 'rgba(189, 0, 255, 0.2)');
+                    break;
+                    
+                case 'sunset':
+                    root.style.setProperty('--bg-primary', '#1a0a00');
+                    root.style.setProperty('--bg-secondary', '#261100');
+                    root.style.setProperty('--text-primary', '#ffffff');
+                    root.style.setProperty('--text-secondary', '#ffccaa');
+                    root.style.setProperty('--accent-cyan', '#ff9900');
+                    root.style.setProperty('--accent-red', '#ff0066');
+                    root.style.setProperty('--accent-purple', '#ff6600');
+                    root.style.setProperty('--accent-yellow', '#ffcc00');
+                    root.style.setProperty('--border-color', 'rgba(255, 153, 0, 0.3)');
+                    root.style.setProperty('--shadow-color', 'rgba(255, 153, 0, 0.2)');
+                    break;
+                    
+                default: // Cyber (default)
+                    root.style.setProperty('--bg-primary', '#0a0a12');
+                    root.style.setProperty('--bg-secondary', '#0f0f1a');
+                    root.style.setProperty('--text-primary', '#ffffff');
+                    root.style.setProperty('--text-secondary', '#a0aec0');
+                    root.style.setProperty('--accent-cyan', '#00ffcc');
+                    root.style.setProperty('--accent-red', '#ff0066');
+                    root.style.setProperty('--accent-purple', '#bd00ff');
+                    root.style.setProperty('--accent-yellow', '#ffcc00');
+                    root.style.setProperty('--border-color', 'rgba(0, 255, 204, 0.3)');
+                    root.style.setProperty('--shadow-color', 'rgba(0, 255, 204, 0.2)');
             }
-        });
+        }
     </script>
 </body>
 </html>
