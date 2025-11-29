@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>vendetta4c - CyberSec Specialist & Digital Solutions</title>
+    <link rel="icon" type="image/x-icon" href="https://i.imgur.com/HdhmcrS.jpeg">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -854,6 +855,60 @@
             border: 1px solid var(--accent-red);
         }
 
+        /* Mobile Navigation */
+        .mobile-nav-toggle {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--accent-cyan);
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-primary);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-nav.active {
+            transform: translateX(0);
+        }
+
+        .mobile-nav-links {
+            list-style: none;
+            text-align: center;
+        }
+
+        .mobile-nav-links li {
+            margin: 20px 0;
+        }
+
+        .mobile-nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: color 0.3s ease;
+        }
+
+        .mobile-nav-links a:hover {
+            color: var(--accent-cyan);
+        }
+
         /* Page System */
         .page {
             display: none;
@@ -1300,12 +1355,104 @@
             left: -13px;
         }
 
+        /* Live Website Trackers */
+        .tracker-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .tracker-card {
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            min-width: 200px;
+            transition: all 0.3s ease;
+        }
+
+        .tracker-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px var(--shadow-color);
+            border-color: var(--accent-red);
+        }
+
+        .tracker-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            margin: 10px 0;
+            font-family: 'Orbitron', monospace;
+        }
+
+        .tracker-label {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        /* Live Apps */
+        .live-apps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .live-app {
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 15px;
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .live-app:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px var(--shadow-color);
+            border-color: var(--accent-red);
+        }
+
+        .live-app h3 {
+            font-family: 'Orbitron', monospace;
+            color: var(--accent-cyan);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .live-app-content {
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
         /* Responsive */
+        @media (max-width: 1024px) {
+            .nav-links {
+                gap: 20px;
+            }
+            
+            .nav-links a {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+            
+            .hero h1 {
+                font-size: clamp(3rem, 10vw, 6rem);
+            }
+        }
+
         @media (max-width: 768px) {
             .controls-panel {
                 position: relative;
-                width: 100%;
+                width: calc(100% - 40px);
                 margin: 20px auto;
+                top: auto;
+                right: auto;
             }
 
             .ai-chat-container {
@@ -1317,6 +1464,10 @@
 
             .nav-links {
                 display: none;
+            }
+            
+            .mobile-nav-toggle {
+                display: block;
             }
 
             .timeline::after {
@@ -1336,6 +1487,55 @@
             .timeline-dot {
                 left: 18px !important;
                 right: auto;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero {
+                padding: 150px 20px 100px;
+            }
+            
+            .section {
+                padding: 80px 20px;
+            }
+            
+            .fab {
+                bottom: 20px;
+                left: 20px;
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: clamp(2.5rem, 8vw, 4rem);
+            }
+            
+            .hero h2 {
+                font-size: clamp(1.2rem, 4vw, 1.8rem);
+            }
+            
+            .hero p {
+                font-size: clamp(1rem, 3vw, 1.4rem);
+            }
+            
+            .cta-button, .cyber-button {
+                padding: 15px 30px;
+                font-size: 14px;
+            }
+            
+            .tracker-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .tracker-card {
+                width: 100%;
+                max-width: 300px;
             }
         }
 
@@ -1416,6 +1616,77 @@
                 transform: translateY(100vh);
                 opacity: 0;
             }
+        }
+        
+        /* Live Crypto Price Ticker */
+        .crypto-ticker {
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .crypto-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .crypto-item:last-child {
+            border-bottom: none;
+        }
+        
+        .crypto-name {
+            color: var(--text-primary);
+        }
+        
+        .crypto-price {
+            color: var(--accent-cyan);
+        }
+        
+        .crypto-change {
+            font-size: 0.9rem;
+        }
+        
+        .crypto-change.positive {
+            color: #10b981;
+        }
+        
+        .crypto-change.negative {
+            color: var(--accent-red);
+        }
+        
+        /* System Monitor */
+        .system-monitor {
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .monitor-bar {
+            height: 20px;
+            background: rgba(0, 255, 204, 0.1);
+            border-radius: 10px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        
+        .monitor-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        
+        .monitor-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
         }
     </style>
 </head>
@@ -1542,8 +1813,25 @@
                 <li><a onclick="showPage('about')" class="nav-link">Identity</a></li>
                 <li><a onclick="showPage('contact')" class="nav-link">Contact</a></li>
             </ul>
+            <button class="mobile-nav-toggle" id="mobileNavToggle">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
     </nav>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav">
+        <ul class="mobile-nav-links">
+            <li><a onclick="showPage('home'); toggleMobileNav()">Home</a></li>
+            <li><a onclick="showPage('services'); toggleMobileNav()">Services</a></li>
+            <li><a onclick="showPage('skills'); toggleMobileNav()">Skills</a></li>
+            <li><a onclick="showPage('portfolio'); toggleMobileNav()">Operations</a></li>
+            <li><a onclick="showPage('webdev'); toggleMobileNav()">Web Dev</a></li>
+            <li><a onclick="showPage('tech'); toggleMobileNav()">Tech</a></li>
+            <li><a onclick="showPage('about'); toggleMobileNav()">Identity</a></li>
+            <li><a onclick="showPage('contact'); toggleMobileNav()">Contact</a></li>
+        </ul>
+    </div>
 
     <!-- HOME PAGE -->
     <div id="home" class="page active">
@@ -1587,6 +1875,63 @@
                 <div class="feature-card holographic">
                     <h3><i class="fas fa-mobile-alt"></i> IoT Security</h3>
                     <p>Securing connected devices and IoT ecosystems against emerging threats and vulnerabilities.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Live Trackers Section -->
+        <section class="section">
+            <h2>SYSTEM MONITOR</h2>
+            <p class="section-description">Real-time tracking of digital assets and security metrics</p>
+            
+            <div class="tracker-container">
+                <div class="tracker-card">
+                    <i class="fas fa-shield-alt" style="font-size: 2rem; color: var(--accent-cyan);"></i>
+                    <div class="tracker-value" id="threatLevel">LOW</div>
+                    <div class="tracker-label">Threat Level</div>
+                </div>
+                <div class="tracker-card">
+                    <i class="fas fa-server" style="font-size: 2rem; color: var(--accent-cyan);"></i>
+                    <div class="tracker-value" id="uptimePercent">99.9%</div>
+                    <div class="tracker-label">System Uptime</div>
+                </div>
+                <div class="tracker-card">
+                    <i class="fas fa-bug" style="font-size: 2rem; color: var(--accent-cyan);"></i>
+                    <div class="tracker-value" id="vulnCount">0</div>
+                    <div class="tracker-label">Active Vulnerabilities</div>
+                </div>
+                <div class="tracker-card">
+                    <i class="fas fa-globe" style="font-size: 2rem; color: var(--accent-cyan);"></i>
+                    <div class="tracker-value" id="globalAttacks">127</div>
+                    <div class="tracker-label">Global Attacks Blocked</div>
+                </div>
+            </div>
+            
+            <!-- System Monitor -->
+            <div class="system-monitor">
+                <h3 style="color: var(--accent-cyan); margin-bottom: 20px; font-family: 'Orbitron', monospace;">SYSTEM PERFORMANCE</h3>
+                <div class="monitor-label">
+                    <span>CPU Usage</span>
+                    <span id="cpuPercent">24%</span>
+                </div>
+                <div class="monitor-bar">
+                    <div class="monitor-fill" id="cpuBar" style="width: 24%"></div>
+                </div>
+                
+                <div class="monitor-label">
+                    <span>Memory Usage</span>
+                    <span id="memoryPercent">62%</span>
+                </div>
+                <div class="monitor-bar">
+                    <div class="monitor-fill" id="memoryBar" style="width: 62%"></div>
+                </div>
+                
+                <div class="monitor-label">
+                    <span>Network Traffic</span>
+                    <span id="networkPercent">38%</span>
+                </div>
+                <div class="monitor-bar">
+                    <div class="monitor-fill" id="networkBar" style="width: 38%"></div>
                 </div>
             </div>
         </section>
@@ -1665,6 +2010,26 @@
                     <p>Security testing and hardening for iOS and Android applications to protect against mobile-specific threats.</p>
                 </div>
             </div>
+            
+            <!-- Live Crypto Prices -->
+            <div class="crypto-ticker">
+                <h3 style="color: var(--accent-cyan); margin-bottom: 15px; font-family: 'Orbitron', monospace;">CRYPTO SECURITY MONITOR</h3>
+                <div class="crypto-item">
+                    <span class="crypto-name">Bitcoin (BTC)</span>
+                    <span class="crypto-price" id="btcPrice">$51,423.78</span>
+                    <span class="crypto-change positive" id="btcChange">+2.35%</span>
+                </div>
+                <div class="crypto-item">
+                    <span class="crypto-name">Ethereum (ETH)</span>
+                    <span class="crypto-price" id="ethPrice">$2,987.32</span>
+                    <span class="crypto-change positive" id="ethChange">+1.87%</span>
+                </div>
+                <div class="crypto-item">
+                    <span class="crypto-name">Monero (XMR)</span>
+                    <span class="crypto-price" id="xmrPrice">$142.56</span>
+                    <span class="crypto-change negative" id="xmrChange">-0.72%</span>
+                </div>
+            </div>
         </section>
     </div>
 
@@ -1708,6 +2073,50 @@
                     <i class="fas fa-key"></i>
                 </div>
             </div>
+            
+            <!-- Skills Visualization -->
+            <div class="system-monitor" style="margin-top: 50px;">
+                <h3 style="color: var(--accent-cyan); margin-bottom: 20px; font-family: 'Orbitron', monospace;">SKILLS PROFICIENCY</h3>
+                <div class="monitor-label">
+                    <span>Penetration Testing</span>
+                    <span>95%</span>
+                </div>
+                <div class="monitor-bar">
+                    <div class="monitor-fill" style="width: 95%"></div>
+                </div>
+                
+                <div class="monitor-label">
+                    <span>Network Security</span>
+                    <span>92%</span>
+                </div>
+                <div class="monitor-bar">
+                    <div class="monitor-fill" style="width: 92%"></div>
+                </div>
+                
+                <div class="monitor-label">
+                    <span>Web Application Security</span>
+                    <span>88%</span>
+                </div>
+                <div class="monitor-bar">
+                    <div class="monitor-fill" style="width: 88%"></div>
+                </div>
+                
+                <div class="monitor-label">
+                    <span>Cryptography</span>
+                    <span>85%</span>
+                </div>
+                <div class="monitor-bar">
+                    <div class="monitor-fill" style="width: 85%"></div>
+                </div>
+                
+                <div class="monitor-label">
+                    <span>Incident Response</span>
+                    <span>90%</span>
+                </div>
+                <div class="monitor-bar">
+                    <div class="monitor-fill" style="width: 90%"></div>
+                </div>
+            </div>
         </section>
     </div>
 
@@ -1733,6 +2142,44 @@
                 <div class="feature-card holographic">
                     <h3><i class="fas fa-industry"></i> Industrial Control Systems</h3>
                     <p>Security assessment for manufacturing infrastructure, identifying vulnerabilities in SCADA systems and industrial networks.</p>
+                </div>
+            </div>
+            
+            <!-- Live Apps Section -->
+            <div style="margin-top: 80px;">
+                <h2 style="margin-bottom: 40px;">LIVE SECURITY TOOLS</h2>
+                <div class="live-apps-container">
+                    <div class="live-app">
+                        <h3><i class="fas fa-search"></i> PORT SCANNER</h3>
+                        <div class="live-app-content">
+                            <p style="margin-bottom: 15px;">Enter an IP address to scan for open ports:</p>
+                            <input type="text" id="scanIp" placeholder="e.g., 192.168.1.1" style="padding: 10px; background: transparent; border: 1px solid var(--border-color); border-radius: 5px; color: var(--text-primary); width: 80%; margin-bottom: 15px;">
+                            <button class="cta-button" onclick="simulatePortScan()" style="padding: 10px 20px; font-size: 14px;">Scan Ports</button>
+                            <div id="scanResults" style="margin-top: 15px; font-family: 'JetBrains Mono', monospace; font-size: 12px;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="live-app">
+                        <h3><i class="fas fa-shield-alt"></i> PASSWORD STRENGTH TESTER</h3>
+                        <div class="live-app-content">
+                            <p style="margin-bottom: 15px;">Test your password strength:</p>
+                            <input type="password" id="passwordTest" placeholder="Enter password" style="padding: 10px; background: transparent; border: 1px solid var(--border-color); border-radius: 5px; color: var(--text-primary); width: 80%; margin-bottom: 15px;">
+                            <div id="passwordStrength" style="height: 10px; background: rgba(0, 255, 204, 0.1); border-radius: 5px; margin-bottom: 10px; overflow: hidden;">
+                                <div id="passwordStrengthBar" style="height: 100%; background: linear-gradient(90deg, var(--accent-red), var(--accent-yellow), var(--accent-cyan)); width: 0%; transition: width 0.5s ease;"></div>
+                            </div>
+                            <div id="passwordFeedback" style="font-size: 12px;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="live-app">
+                        <h3><i class="fas fa-code"></i> ENCRYPTION DEMO</h3>
+                        <div class="live-app-content">
+                            <p style="margin-bottom: 15px;">Enter text to encrypt:</p>
+                            <input type="text" id="encryptText" placeholder="Enter text" style="padding: 10px; background: transparent; border: 1px solid var(--border-color); border-radius: 5px; color: var(--text-primary); width: 80%; margin-bottom: 15px;">
+                            <button class="cta-button" onclick="encryptText()" style="padding: 10px 20px; font-size: 14px;">Encrypt</button>
+                            <div id="encryptedResult" style="margin-top: 15px; font-family: 'JetBrains Mono', monospace; font-size: 12px; word-break: break-all;"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1781,6 +2228,55 @@
                     <p><span class="terminal-prompt">></span> Databases: MongoDB, PostgreSQL, MySQL, Redis</p>
                     <p><span class="terminal-prompt">></span> DevOps: Docker, Kubernetes, AWS, Azure, GitHub Actions</p>
                     <p><span class="terminal-prompt">></span> Tools: Webpack, Babel, ESLint, Prettier, Git</p>
+                </div>
+            </div>
+            
+            <!-- Web Development Live Demo -->
+            <div style="margin-top: 80px;">
+                <h2 style="margin-bottom: 40px;">RESPONSIVE DESIGN DEMO</h2>
+                <div class="live-apps-container">
+                    <div class="live-app">
+                        <h3><i class="fas fa-desktop"></i> SCREEN SIZE TESTER</h3>
+                        <div class="live-app-content">
+                            <p>Current screen size:</p>
+                            <div id="screenSize" style="font-size: 2rem; color: var(--accent-cyan); margin: 15px 0; font-family: 'Orbitron', monospace;"></div>
+                            <p>Device type: <span id="deviceType" style="color: var(--accent-cyan);"></span></p>
+                        </div>
+                    </div>
+                    
+                    <div class="live-app">
+                        <h3><i class="fas fa-palette"></i> COLOR SCHEME TESTER</h3>
+                        <div class="live-app-content">
+                            <p>Test different color combinations:</p>
+                            <div style="display: flex; gap: 10px; margin-top: 15px;">
+                                <div style="width: 30px; height: 30px; background: var(--accent-cyan); border-radius: 5px;"></div>
+                                <div style="width: 30px; height: 30px; background: var(--accent-red); border-radius: 5px;"></div>
+                                <div style="width: 30px; height: 30px; background: var(--accent-purple); border-radius: 5px;"></div>
+                            </div>
+                            <button class="cta-button" onclick="randomizeColors()" style="padding: 10px 20px; font-size: 14px; margin-top: 15px;">Randomize Colors</button>
+                        </div>
+                    </div>
+                    
+                    <div class="live-app">
+                        <h3><i class="fas fa-code"></i> CODE PREVIEW</h3>
+                        <div class="live-app-content">
+                            <pre style="background: rgba(0, 0, 0, 0.5); padding: 15px; border-radius: 5px; overflow: auto; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent-cyan);">
+// Responsive CSS Example
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+  
+  .nav-links {
+    display: none;
+  }
+  
+  .mobile-nav-toggle {
+    display: block;
+  }
+}</pre>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1865,6 +2361,66 @@
                     </div>
                 </div>
             </div>
+            
+            <!-- Tech Live Demo -->
+            <div style="margin-top: 80px;">
+                <h2 style="margin-bottom: 40px;">TECHNOLOGY DEMOS</h2>
+                <div class="live-apps-container">
+                    <div class="live-app">
+                        <h3><i class="fas fa-code-branch"></i> GIT COMMIT SIMULATOR</h3>
+                        <div class="live-app-content">
+                            <p>Simulate a git commit:</p>
+                            <input type="text" id="commitMessage" placeholder="Enter commit message" style="padding: 10px; background: transparent; border: 1px solid var(--border-color); border-radius: 5px; color: var(--text-primary); width: 80%; margin-bottom: 15px;">
+                            <button class="cta-button" onclick="simulateGitCommit()" style="padding: 10px 20px; font-size: 14px;">Commit</button>
+                            <div id="commitResult" style="margin-top: 15px; font-family: 'JetBrains Mono', monospace; font-size: 12px;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="live-app">
+                        <h3><i class="fas fa-terminal"></i> COMMAND LINE</h3>
+                        <div class="live-app-content">
+                            <div style="background: rgba(0, 0, 0, 0.8); border-radius: 5px; padding: 15px; height: 150px; overflow-y: auto; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent-cyan);">
+                                <div>> Welcome to the terminal simulator</div>
+                                <div>> Type 'help' for available commands</div>
+                                <div id="terminalOutput"></div>
+                                <div style="display: flex;">
+                                    <span style="color: var(--accent-purple);">></span>
+                                    <input type="text" id="terminalInput" style="background: transparent; border: none; color: var(--accent-cyan); outline: none; margin-left: 5px; width: 100%; font-family: 'JetBrains Mono', monospace;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="live-app">
+                        <h3><i class="fas fa-network-wired"></i> NETWORK STATUS</h3>
+                        <div class="live-app-content">
+                            <div class="monitor-label">
+                                <span>Connection</span>
+                                <span id="connectionStatus" style="color: var(--accent-cyan);">Secure</span>
+                            </div>
+                            <div class="monitor-bar">
+                                <div class="monitor-fill" style="width: 100%"></div>
+                            </div>
+                            
+                            <div class="monitor-label">
+                                <span>Latency</span>
+                                <span id="latencyValue">24ms</span>
+                            </div>
+                            <div class="monitor-bar">
+                                <div class="monitor-fill" style="width: 90%"></div>
+                            </div>
+                            
+                            <div class="monitor-label">
+                                <span>Bandwidth</span>
+                                <span id="bandwidthValue">85 Mbps</span>
+                            </div>
+                            <div class="monitor-bar">
+                                <div class="monitor-fill" style="width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
     </div>
 
@@ -1925,6 +2481,33 @@
                     </div>
                 </div>
             </div>
+            
+            <!-- Personal Stats -->
+            <div style="margin-top: 80px;">
+                <h2 style="margin-bottom: 40px;">PERSONAL STATISTICS</h2>
+                <div class="tracker-container">
+                    <div class="tracker-card">
+                        <i class="fas fa-project-diagram" style="font-size: 2rem; color: var(--accent-cyan);"></i>
+                        <div class="tracker-value">150+</div>
+                        <div class="tracker-label">Projects Completed</div>
+                    </div>
+                    <div class="tracker-card">
+                        <i class="fas fa-user-shield" style="font-size: 2rem; color: var(--accent-cyan);"></i>
+                        <div class="tracker-value">50+</div>
+                        <div class="tracker-label">Clients Protected</div>
+                    </div>
+                    <div class="tracker-card">
+                        <i class="fas fa-bug" style="font-size: 2rem; color: var(--accent-cyan);"></i>
+                        <div class="tracker-value">1000+</div>
+                        <div class="tracker-label">Vulnerabilities Found</div>
+                    </div>
+                    <div class="tracker-card">
+                        <i class="fas fa-award" style="font-size: 2rem; color: var(--accent-cyan);"></i>
+                        <div class="tracker-value">12</div>
+                        <div class="tracker-label">Certifications</div>
+                    </div>
+                </div>
+            </div>
         </section>
     </div>
 
@@ -1950,6 +2533,28 @@
             <div style="text-align: center; margin-top: 50px;">
                 <button class="cyber-button" onclick="location.href='mailto:dettatron445@gmail.com'">SEND ENCRYPTED EMAIL</button>
                 <button class="cta-button" onclick="location.href='https://wa.me/233570736544'">CONTACT ON WHATSAPP</button>
+            </div>
+            
+            <!-- Contact Form -->
+            <div style="max-width: 600px; margin: 50px auto;">
+                <h3 style="color: var(--accent-cyan); margin-bottom: 20px; text-align: center; font-family: 'Orbitron', monospace;">SECURE CONTACT FORM</h3>
+                <div class="feature-card">
+                    <form id="contactForm">
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; margin-bottom: 8px; color: var(--text-secondary);">Name</label>
+                            <input type="text" style="width: 100%; padding: 12px; background: transparent; border: 1px solid var(--border-color); border-radius: 5px; color: var(--text-primary);" required>
+                        </div>
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; margin-bottom: 8px; color: var(--text-secondary);">Email</label>
+                            <input type="email" style="width: 100%; padding: 12px; background: transparent; border: 1px solid var(--border-color); border-radius: 5px; color: var(--text-primary);" required>
+                        </div>
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; margin-bottom: 8px; color: var(--text-secondary);">Message</label>
+                            <textarea rows="5" style="width: 100%; padding: 12px; background: transparent; border: 1px solid var(--border-color); border-radius: 5px; color: var(--text-primary); resize: vertical;" required></textarea>
+                        </div>
+                        <button type="submit" class="cyber-button" style="width: 100%;">SEND SECURE MESSAGE</button>
+                    </form>
+                </div>
             </div>
         </section>
     </div>
@@ -1980,11 +2585,25 @@
             setupAIChat();
             setupThemeToggle();
             setupTicker();
+            setupMobileNav();
+            setupLiveTrackers();
+            setupPasswordTester();
+            setupTerminalSimulator();
+            updateScreenSize();
             
             // Auto-rotate features
             setInterval(() => {
                 highlightRandomFeature();
             }, 3000);
+            
+            // Update system monitors
+            setInterval(updateSystemMonitors, 2000);
+            
+            // Update crypto prices
+            setInterval(updateCryptoPrices, 5000);
+            
+            // Update network status
+            setInterval(updateNetworkStatus, 3000);
         }
 
         // Matrix Rain Effect
@@ -2225,6 +2844,31 @@
                     return "Our technology solutions include cloud infrastructure, network setup, and IT consulting.";
                 }
                 
+                // Navigation assistance
+                if (userMessage.toLowerCase().includes('home') || userMessage.toLowerCase().includes('main')) {
+                    return "I can take you to the home page. Just click on the 'Home' link in the navigation.";
+                }
+                
+                if (userMessage.toLowerCase().includes('service')) {
+                    return "Our services include penetration testing, incident response, and security architecture. Check the Services page for details.";
+                }
+                
+                if (userMessage.toLowerCase().includes('skill')) {
+                    return "I can show you our technical skills and certifications. Navigate to the Skills page.";
+                }
+                
+                if (userMessage.toLowerCase().includes('contact') || userMessage.toLowerCase().includes('reach')) {
+                    return "You can contact us via encrypted email or WhatsApp. Check the Contact page for details.";
+                }
+                
+                if (userMessage.toLowerCase().includes('portfolio') || userMessage.toLowerCase().includes('project')) {
+                    return "Our portfolio includes security operations for various industries. Visit the Operations page.";
+                }
+                
+                if (userMessage.toLowerCase().includes('about') || userMessage.toLowerCase().includes('who')) {
+                    return "Learn more about our background and experience on the Identity page.";
+                }
+                
                 return responses[Math.floor(Math.random() * responses.length)];
             }
             
@@ -2239,6 +2883,25 @@
                 
                 const response = getAIResponse(message);
                 addMessage(response);
+                
+                // If the message is about navigation, automatically navigate
+                if (message.toLowerCase().includes('home') || message.toLowerCase().includes('main')) {
+                    setTimeout(() => showPage('home'), 1000);
+                } else if (message.toLowerCase().includes('service')) {
+                    setTimeout(() => showPage('services'), 1000);
+                } else if (message.toLowerCase().includes('skill')) {
+                    setTimeout(() => showPage('skills'), 1000);
+                } else if (message.toLowerCase().includes('contact') || message.toLowerCase().includes('reach')) {
+                    setTimeout(() => showPage('contact'), 1000);
+                } else if (message.toLowerCase().includes('portfolio') || message.toLowerCase().includes('project')) {
+                    setTimeout(() => showPage('portfolio'), 1000);
+                } else if (message.toLowerCase().includes('about') || message.toLowerCase().includes('who')) {
+                    setTimeout(() => showPage('about'), 1000);
+                } else if (message.toLowerCase().includes('web') || message.toLowerCase().includes('development')) {
+                    setTimeout(() => showPage('webdev'), 1000);
+                } else if (message.toLowerCase().includes('tech')) {
+                    setTimeout(() => showPage('tech'), 1000);
+                }
             }
             
             chatSend.addEventListener('click', sendMessage);
@@ -2265,7 +2928,10 @@
                 link.classList.remove('active');
             });
             
-            document.querySelector(`a[onclick="showPage('${pageId}')"]`).classList.add('active');
+            const navLink = document.querySelector(`a[onclick="showPage('${pageId}')"]`);
+            if (navLink) {
+                navLink.classList.add('active');
+            }
             
             // Scroll to top
             window.scrollTo(0, 0);
@@ -2427,6 +3093,286 @@
                     root.style.setProperty('--shadow-color', 'rgba(0, 255, 204, 0.2)');
             }
         }
+
+        // Mobile Navigation
+        function setupMobileNav() {
+            const mobileNavToggle = document.getElementById('mobileNavToggle');
+            const mobileNav = document.getElementById('mobileNav');
+            
+            mobileNavToggle.addEventListener('click', toggleMobileNav);
+            
+            function toggleMobileNav() {
+                mobileNav.classList.toggle('active');
+                
+                // Change icon
+                const icon = mobileNavToggle.querySelector('i');
+                if (mobileNav.classList.contains('active')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            }
+        }
+
+        // Live Trackers
+        function setupLiveTrackers() {
+            // Update system monitors periodically
+            updateSystemMonitors();
+            
+            // Update crypto prices
+            updateCryptoPrices();
+        }
+
+        function updateSystemMonitors() {
+            // Randomize values for demo purposes
+            const threatLevels = ['LOW', 'MEDIUM', 'HIGH'];
+            document.getElementById('threatLevel').textContent = threatLevels[Math.floor(Math.random() * threatLevels.length)];
+            
+            const uptime = (99 + Math.random()).toFixed(1);
+            document.getElementById('uptimePercent').textContent = `${uptime}%`;
+            
+            const vulnCount = Math.floor(Math.random() * 5);
+            document.getElementById('vulnCount').textContent = vulnCount;
+            
+            const globalAttacks = 120 + Math.floor(Math.random() * 20);
+            document.getElementById('globalAttacks').textContent = globalAttacks;
+            
+            // Update system performance bars
+            const cpuPercent = 20 + Math.floor(Math.random() * 30);
+            document.getElementById('cpuPercent').textContent = `${cpuPercent}%`;
+            document.getElementById('cpuBar').style.width = `${cpuPercent}%`;
+            
+            const memoryPercent = 50 + Math.floor(Math.random() * 30);
+            document.getElementById('memoryPercent').textContent = `${memoryPercent}%`;
+            document.getElementById('memoryBar').style.width = `${memoryPercent}%`;
+            
+            const networkPercent = 30 + Math.floor(Math.random() * 40);
+            document.getElementById('networkPercent').textContent = `${networkPercent}%`;
+            document.getElementById('networkBar').style.width = `${networkPercent}%`;
+        }
+
+        function updateCryptoPrices() {
+            // Simulate price changes
+            const btcChange = (Math.random() * 4 - 2).toFixed(2);
+            const btcPrice = 51423.78 * (1 + btcChange / 100);
+            document.getElementById('btcPrice').textContent = `$${btcPrice.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            document.getElementById('btcChange').textContent = `${btcChange >= 0 ? '+' : ''}${btcChange}%`;
+            document.getElementById('btcChange').className = `crypto-change ${btcChange >= 0 ? 'positive' : 'negative'}`;
+            
+            const ethChange = (Math.random() * 3 - 1.5).toFixed(2);
+            const ethPrice = 2987.32 * (1 + ethChange / 100);
+            document.getElementById('ethPrice').textContent = `$${ethPrice.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            document.getElementById('ethChange').textContent = `${ethChange >= 0 ? '+' : ''}${ethChange}%`;
+            document.getElementById('ethChange').className = `crypto-change ${ethChange >= 0 ? 'positive' : 'negative'}`;
+            
+            const xmrChange = (Math.random() * 2 - 1).toFixed(2);
+            const xmrPrice = 142.56 * (1 + xmrChange / 100);
+            document.getElementById('xmrPrice').textContent = `$${xmrPrice.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            document.getElementById('xmrChange').textContent = `${xmrChange >= 0 ? '+' : ''}${xmrChange}%`;
+            document.getElementById('xmrChange').className = `crypto-change ${xmrChange >= 0 ? 'positive' : 'negative'}`;
+        }
+
+        function updateNetworkStatus() {
+            const latency = 20 + Math.floor(Math.random() * 20);
+            document.getElementById('latencyValue').textContent = `${latency}ms`;
+            
+            const bandwidth = 80 + Math.floor(Math.random() * 20);
+            document.getElementById('bandwidthValue').textContent = `${bandwidth} Mbps`;
+        }
+
+        // Password Strength Tester
+        function setupPasswordTester() {
+            const passwordInput = document.getElementById('passwordTest');
+            const strengthBar = document.getElementById('passwordStrengthBar');
+            const feedback = document.getElementById('passwordFeedback');
+            
+            passwordInput.addEventListener('input', function() {
+                const password = this.value;
+                let strength = 0;
+                let feedbackText = '';
+                
+                if (password.length > 0) {
+                    // Length check
+                    if (password.length >= 8) strength += 25;
+                    
+                    // Character variety checks
+                    if (/[a-z]/.test(password)) strength += 15;
+                    if (/[A-Z]/.test(password)) strength += 15;
+                    if (/[0-9]/.test(password)) strength += 15;
+                    if (/[^a-zA-Z0-9]/.test(password)) strength += 15;
+                    
+                    // Common patterns penalty
+                    if (/(.)\1{2,}/.test(password)) strength -= 10; // Repeated characters
+                    if (/123|abc|qwerty|password/i.test(password)) strength -= 20; // Common patterns
+                    
+                    // Ensure strength is between 0 and 100
+                    strength = Math.max(0, Math.min(100, strength));
+                    
+                    // Set strength bar width
+                    strengthBar.style.width = `${strength}%`;
+                    
+                    // Provide feedback
+                    if (strength < 30) {
+                        feedbackText = 'Weak password';
+                        strengthBar.style.background = 'linear-gradient(90deg, var(--accent-red), var(--accent-red))';
+                    } else if (strength < 60) {
+                        feedbackText = 'Moderate password';
+                        strengthBar.style.background = 'linear-gradient(90deg, var(--accent-red), var(--accent-yellow))';
+                    } else if (strength < 80) {
+                        feedbackText = 'Strong password';
+                        strengthBar.style.background = 'linear-gradient(90deg, var(--accent-yellow), var(--accent-cyan))';
+                    } else {
+                        feedbackText = 'Very strong password';
+                        strengthBar.style.background = 'linear-gradient(90deg, var(--accent-cyan), var(--accent-cyan))';
+                    }
+                } else {
+                    strengthBar.style.width = '0%';
+                    feedbackText = '';
+                }
+                
+                feedback.textContent = feedbackText;
+            });
+        }
+
+        // Terminal Simulator
+        function setupTerminalSimulator() {
+            const terminalInput = document.getElementById('terminalInput');
+            const terminalOutput = document.getElementById('terminalOutput');
+            
+            terminalInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const command = this.value.trim().toLowerCase();
+                    this.value = '';
+                    
+                    let output = '';
+                    
+                    if (command === 'help') {
+                        output = 'Available commands: help, clear, date, whoami, ls, pwd';
+                    } else if (command === 'clear') {
+                        terminalOutput.innerHTML = '';
+                        return;
+                    } else if (command === 'date') {
+                        output = new Date().toString();
+                    } else if (command === 'whoami') {
+                        output = 'vendetta4c';
+                    } else if (command === 'ls') {
+                        output = 'services.txt  skills.txt  portfolio.txt  contact.txt';
+                    } else if (command === 'pwd') {
+                        output = '/home/vendetta4c';
+                    } else if (command === '') {
+                        // Do nothing for empty command
+                    } else {
+                        output = `Command not found: ${command}. Type 'help' for available commands.`;
+                    }
+                    
+                    if (output) {
+                        const newOutput = document.createElement('div');
+                        newOutput.textContent = `> ${output}`;
+                        terminalOutput.appendChild(newOutput);
+                        terminalOutput.scrollTop = terminalOutput.scrollHeight;
+                    }
+                }
+            });
+        }
+
+        // Screen Size Detection
+        function updateScreenSize() {
+            const screenSize = document.getElementById('screenSize');
+            const deviceType = document.getElementById('deviceType');
+            
+            function update() {
+                const width = window.innerWidth;
+                const height = window.innerHeight;
+                
+                screenSize.textContent = `${width} × ${height}`;
+                
+                if (width < 768) {
+                    deviceType.textContent = 'Mobile';
+                } else if (width < 1024) {
+                    deviceType.textContent = 'Tablet';
+                } else {
+                    deviceType.textContent = 'Desktop';
+                }
+            }
+            
+            update();
+            window.addEventListener('resize', update);
+        }
+
+        // Live App Functions
+        function simulatePortScan() {
+            const ip = document.getElementById('scanIp').value;
+            const results = document.getElementById('scanResults');
+            
+            if (!ip) {
+                results.textContent = 'Please enter an IP address';
+                return;
+            }
+            
+            results.textContent = 'Scanning...';
+            
+            setTimeout(() => {
+                const ports = [22, 80, 443, 8080];
+                const openPorts = ports.filter(() => Math.random() > 0.5);
+                
+                if (openPorts.length > 0) {
+                    results.textContent = `Open ports on ${ip}: ${openPorts.join(', ')}`;
+                } else {
+                    results.textContent = `No open ports found on ${ip}`;
+                }
+            }, 1500);
+        }
+
+        function encryptText() {
+            const text = document.getElementById('encryptText').value;
+            const result = document.getElementById('encryptedResult');
+            
+            if (!text) {
+                result.textContent = 'Please enter text to encrypt';
+                return;
+            }
+            
+            // Simple "encryption" for demo purposes
+            let encrypted = '';
+            for (let i = 0; i < text.length; i++) {
+                const charCode = text.charCodeAt(i);
+                encrypted += String.fromCharCode(charCode + 1);
+            }
+            
+            // Convert to base64 for a more "encrypted" look
+            result.textContent = btoa(encrypted);
+        }
+
+        function randomizeColors() {
+            const root = document.documentElement;
+            const hue = Math.floor(Math.random() * 360);
+            
+            root.style.setProperty('--accent-cyan', `hsl(${hue}, 100%, 50%)`);
+            root.style.setProperty('--accent-red', `hsl(${(hue + 120) % 360}, 100%, 50%)`);
+            root.style.setProperty('--accent-purple', `hsl(${(hue + 240) % 360}, 100%, 50%)`);
+        }
+
+        function simulateGitCommit() {
+            const message = document.getElementById('commitMessage').value;
+            const result = document.getElementById('commitResult');
+            
+            if (!message) {
+                result.textContent = 'Please enter a commit message';
+                return;
+            }
+            
+            const commitHash = Math.random().toString(16).substring(2, 10);
+            result.textContent = `[${commitHash}] ${message}`;
+        }
+
+        // Contact Form
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Secure message sent! (This is a demo - no actual message was sent)');
+            this.reset();
+        });
     </script>
 </body>
 </html>
